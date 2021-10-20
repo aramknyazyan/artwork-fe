@@ -16,6 +16,7 @@ const Footer = () => {
           <p className="pages">About</p>
           <p className="pages">Artists</p>
           <p className="pages">Contact Us</p>
+          <p className="pages">Us</p>
         </Col>
       </Col>
       <Col span={12} className="socialIcons">
