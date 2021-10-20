@@ -1,0 +1,66 @@
+$primaryColor: #333333;
+@font-face {
+  font-family: freightDispPro;
+  src: url(../../Assets/Fonts/FreightDispPro/FreightDispPro.otf);
+}
+@font-face {
+  font-family: Inter;
+  src: url(../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+.Navigation {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  background-color: white;
+  z-index: 1100;
+  top: 0;
+}
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.text {
+  margin: 20px 0px 20px 120px;
+  font-size: 30px;
+  color: $primaryColor;
+  font-weight: normal;
+  letter-spacing: 0.02rem;
+  font-family: freightDispPro;
+}
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0px 120px 0px 0px;
+  border: none;
+}
+.ant-menu-vertical .ant-menu-item:not(:last-child) {
+  margin-bottom: 0px;
+}
+.pages {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 0px 20px 0px 20px;
+  margin-bottom: 0px;
+}
+.submitWorkButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 9px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Inter;
+  background-color: $primaryColor;
+  border: none;
+  transition: 400ms;
+}
+.none {
+  display: none;
+}

@@ -1,0 +1,23 @@
+$primaryColor: #333333;
+.footer {
+  display: flex;
+  align-items: center;
+  margin-top: 80px;
+  padding: 20px 0px 20px 0px;
+  border-top: 1px solid $primaryColor;
+}
+.footerPages {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0px 0px 0px 120px;
+}
+.icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0px 120px 0px 0px;
+}
+.icon {
+  margin: 10px;
+}

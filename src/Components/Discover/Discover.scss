@@ -1,0 +1,31 @@
+$primaryColor: #333333;
+@font-face {
+  font-family: Inter;
+  src: url(../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+.discoverImage {
+  background-image: url(../../Assets/Imges/image1.png);
+  background-size: cover;
+}
+.ArLogoWhite {
+  margin: 140px 0px;
+}
+.primaryButton {
+  border: 1px solid $primaryColor;
+  border-radius: 4px;
+  color: $primaryColor;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+}
+.sectionTitle {
+  width: 68%;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  text-align: start;
+  margin-bottom: 40px;
+}
