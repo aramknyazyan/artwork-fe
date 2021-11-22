@@ -1,19 +1,23 @@
+import React from "react";
 import Header from "./Components/Header/Header";
-import SellArWork from "./Components/SellArWork/SellArWork";
-import Discover from "./Components/Discover/Discover";
 import Footer from "./Components/Footer/Footer";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import "./App.css";
-import Artsper from "./Components/Artsper/Artsper";
+import HomePage from "./pages/HomePage/HomePage";
+import SubmitPage from "./pages/SubmitPage/SubmitPage";
+
+import "./App.scss";
+import "antd/dist/antd.css";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <SellArWork />
-      <Discover />
-      <Artsper />
-      <Footer />
+      <Router>
+        <Header />
+        <Route exact path="/" component={HomePage} />
+        <Route path="/Submit" component={SubmitPage} />
+        <Footer />
+      </Router>
     </div>
   );
 }

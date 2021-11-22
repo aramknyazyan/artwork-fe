@@ -1,0 +1,80 @@
+@use "../../../../App.scss" as v;
+@font-face {
+  font-family: Inter;
+  src: url(../../../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+.sell-arWork {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url(../../../../Assets//Images/home-page-background.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 80px 0px;
+  margin-bottom: 60px;
+  .title {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 64px;
+    color: v.$whiteColor;
+    margin-top: 50px;
+  }
+  .sub-title {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: v.$whiteColor;
+    margin-top: 17px;
+  }
+  .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 45px;
+
+    .submit-work-button {
+      font-family: Inter;
+      font-style: normal;
+      font-size: 16px;
+      color: v.$primaryColor;
+      padding: 7px 15px;
+      border: 1px solid v.$whiteColor;
+      border-radius: 8px;
+      background-color: v.$whiteColor;
+      margin: 0;
+      cursor: pointer;
+      transition: 300ms;
+    }
+    .submit-work-button:hover {
+      color: v.$whiteColor;
+      background-color: transparent;
+    }
+
+    .free-valuation {
+      font-family: Inter;
+      font-style: normal;
+      font-size: 16px;
+      color: v.$whiteColor;
+      padding: 7px 10px;
+      border: 1px solid v.$whiteColor;
+      border-radius: 8px;
+      background-color: transparent;
+      margin: 0 0 0 15px;
+      cursor: pointer;
+      transition: 300ms;
+    }
+    .free-valuation:hover {
+      background-color: v.$whiteColor;
+      color: v.$primaryColor;
+    }
+  }
+}

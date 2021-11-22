@@ -1,4 +1,4 @@
-$primaryColor: #333333;
+@use "../../App.scss" as v;
 @font-face {
   font-family: freightDispPro;
   src: url(../../Assets/Fonts/FreightDispPro/FreightDispPro.otf);
@@ -7,60 +7,53 @@ $primaryColor: #333333;
   font-family: Inter;
   src: url(../../Assets/Fonts/Inter/InterRegular.ttf);
 }
-.Navigation {
+
+.navigation {
   display: flex;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  background-color: white;
-  z-index: 1100;
-  top: 0;
-}
-.name {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.text {
-  margin: 20px 0px 20px 120px;
-  font-size: 30px;
-  color: $primaryColor;
-  font-weight: normal;
-  letter-spacing: 0.02rem;
-  font-family: freightDispPro;
-}
-.menu {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin: 0px 120px 0px 0px;
-  border: none;
-}
-.ant-menu-vertical .ant-menu-item:not(:last-child) {
-  margin-bottom: 0px;
-}
-.pages {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 22px;
-  padding: 0px 20px 0px 20px;
-  margin-bottom: 0px;
-}
-.submitWorkButton {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 9px 20px;
-  font-size: 16px;
-  font-weight: 600;
-  font-family: Inter;
-  background-color: $primaryColor;
-  border: none;
-  transition: 400ms;
-}
-.none {
-  display: none;
+  position: absolute;
+  width: 100%;
+  background-color: transparent;
+  z-index: 1100;
+  top: 0;
+  right: 0;
+  left: 0;
+  .name {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: v.$whiteColor;
+    padding: 18px 0px;
+    font-size: 15px;
+    .text {
+      font-size: 30px;
+      color: v.$whiteColor;
+      font-weight: normal;
+      letter-spacing: 0.02rem;
+      font-family: freightDispPro;
+    }
+  }
+  .menu {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    .pages {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      padding: 0px 20px 0px 20px;
+      margin-bottom: 0px;
+      color: v.$whiteColor;
+      transition: 400ms;
+      cursor: pointer;
+    }
+    .pages:hover {
+      color: v.$secondColor;
+    }
+  }
 }
