@@ -1,0 +1,59 @@
+@use "../../../../App.scss" as v;
+@font-face {
+  font-family: Inter;
+  src: url(../../../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+
+.discover {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: v.$backgroundColor;
+
+  .discover-content {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 5%;
+
+    .section-title {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 28px;
+      text-align: start;
+      margin-bottom: 40px;
+    }
+
+    .primary-button {
+      border: 1px solid v.$primaryColor;
+      border-radius: 4px;
+      color: v.$primaryColor;
+      background-color: transparent;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 19px;
+      transition: 300ms;
+    }
+    .primary-button:hover {
+      background-color: v.$primaryColor;
+      color: white;
+    }
+  }
+
+  .discover-image {
+    width: 55%;
+    background-image: url(../../../../Assets/Images/image1.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    .ar-logo-white {
+      margin: 140px 0px;
+    }
+  }
+}

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Col, Row, Typography } from "antd";
+import { Link } from "react-router-dom";
 
-import "antd/dist/antd.css";
-import { Col, Row, Menu, Button } from "antd";
+import Card from "../Card/Card";
 
 import "./Header.scss";
 
@@ -15,33 +16,30 @@ const Header = () => {
     }
   };
 
+  const { Text } = Typography;
   return (
-    <>
-      <Row
-        style={{ display: "flex", alignItems: "center" }}
-        className="Navigation"
-      >
-        <Col span={12} style={{ fontSize: "25px" }} className="name">
-          <p className="text">Edelweiss Gallery</p>
+    <Row className="navigation">
+      <Card>
+        <Col className="name">
+          <Link to="/">
+            <Text className="text">Edelweiss Gallery</Text>
+          </Link>
         </Col>
-        <Col span={12}>
-          <Menu className="menu">
-            <Menu.Item key="about" className="pages">
+        <Col>
+          <Col className="menu">
+            <Text key="about" className="pages">
               About
-            </Menu.Item>
-            <Menu.Item key="artists" className="pages">
+            </Text>
+            <Text key="artists" className="pages">
               Artists
-            </Menu.Item>
-            <Menu.Item key="contact" className="pages">
+            </Text>
+            <Text key="contact" className="pages">
               Contact Us
-            </Menu.Item>
-            <Button type="primary" className={show}>
-              Submit Arwork
-            </Button>
-          </Menu>
+            </Text>
+          </Col>
         </Col>
-      </Row>
-    </>
+      </Card>
+    </Row>
   );
 };
 

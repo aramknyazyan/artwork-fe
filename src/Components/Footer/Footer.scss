@@ -1,23 +1,34 @@
-$primaryColor: #333333;
+@use "../../App.scss" as v;
 .footer {
+  width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   margin-top: 80px;
-  padding: 20px 0px 20px 0px;
-  border-top: 1px solid $primaryColor;
-}
-.footerPages {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 0px 0px 0px 120px;
-}
-.icons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin: 0px 120px 0px 0px;
-}
-.icon {
-  margin: 10px;
+  padding: 20px 0;
+  border-top: 1px solid v.$primaryColor;
+  .footer-pages {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .pages {
+      color: v.$primaryColor;
+      font-size: 16px;
+      margin-right: 5px;
+      cursor: pointer;
+      transition: 300ms;
+    }
+    .pages:hover {
+      color: v.$secondColor;
+    }
+  }
+
+  .icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .icon {
+      margin: 10px;
+    }
+  }
 }

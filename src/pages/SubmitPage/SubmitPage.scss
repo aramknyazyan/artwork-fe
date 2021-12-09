@@ -1,0 +1,207 @@
+$primaryColor: #333333;
+$primaryColorTransperent: rgba(51, 51, 51, 0.4);
+@font-face {
+  font-family: freightDispPro;
+  src: url(../../Assets/Fonts/FreightDispPro/FreightDispPro.otf);
+}
+@font-face {
+  font-family: Inter;
+  src: url(../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.submitPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 87px;
+}
+.submitCard {
+  max-width: 584px;
+  width: 100%;
+  margin-top: 54px;
+  display: flex;
+  align-items: flex-start;
+}
+.sections {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.top {
+  box-shadow: 0px 1px 0px rgba(43, 65, 108, 0.1);
+}
+.edelweissGallery {
+  font-family: freightDispPro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 38px;
+  letter-spacing: 0.02em;
+  margin: 0;
+  padding: 20px 0px 20px 0px;
+  color: $primaryColor;
+}
+.bigText {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 31px;
+  color: $primaryColor;
+}
+.selectBig {
+  width: 280px;
+  height: 38px;
+  border-radius: 7px;
+}
+.smallText {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: $primaryColor;
+  margin: 0px 0px 8px 0px;
+}
+.spaceBetween {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 36px;
+}
+.column {
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.optional {
+  font-weight: 500;
+  color: $primaryColorTransperent;
+}
+
+/////////////////////////////
+.redAsterisk {
+  color: red;
+}
+
+.ant-row .ant-form-item {
+  margin-bottom: 0px;
+}
+.ant-form-item .ant-select,
+.ant-form-item .ant-cascader-picker {
+  width: 280px;
+  height: 38px;
+}
+.ant-radio-wrapper {
+  margin-right: 0px;
+}
+.ant-tooltip-inner {
+  display: none;
+}
+
+.twoInputs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 36px;
+}
+.oneInput {
+  width: 100%;
+  display: flex;
+  margin-top: 36px;
+}
+.inputSizeBig {
+  width: 584px;
+  height: 38px;
+  border-radius: 7px;
+}
+.inputSizeSmalll {
+  width: 280px;
+  height: 38px;
+  border-radius: 7px;
+}
+.inputSizeSmaller {
+  width: 105px;
+  height: 38px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+  border-right: none;
+}
+.phoneShow {
+  margin-top: 36px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-align: start;
+}
+.mailShow {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: start;
+}
+.none {
+  display: none;
+}
+.textSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 36px;
+}
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 26px;
+  height: 32px;
+}
+.ant-form-horizontal .ant-form-item-control {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.submitButton {
+  width: 100%;
+  margin-bottom: "14px";
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  justify-content: center;
+}
+.lightText {
+  font-weight: 500;
+}
+.select {
+  padding: 0;
+  width: 73px;
+  height: 38px;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  background-color: #fafafa;
+}
+
+.background-image{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  background-color: cadetblue;
+  color: white;
+  
+
+}
