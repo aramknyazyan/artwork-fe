@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Row, Typography } from "antd";
 import { Link } from "react-router-dom";
 
@@ -7,15 +7,6 @@ import Card from "../Card/Card";
 import "./Header.scss";
 
 const Header = () => {
-  const [show, setShow] = useState("none");
-  onscroll = () => {
-    if (window.scrollY > 40) {
-      setShow("submitWorkButton");
-    } else if (window.scrollY < 40) {
-      setShow("none");
-    }
-  };
-
   const { Text } = Typography;
   return (
     <Row className="navigation">
@@ -34,7 +25,7 @@ const Header = () => {
               Artists
             </Text>
             <Text key="contact" className="pages">
-              Contact Us
+              <Link to="/backoffice">Contact Us</Link>
             </Text>
           </Col>
         </Col>

@@ -15,10 +15,11 @@ const SellArWork = () => {
       </Col>
       <Col className="buttons">
         <Col>
-          <Text type="button" className="submit-work-button">
-            Submit Arwork
-          </Text>
-          <Link to="/Submit" />
+          <Link to="/Submit">
+            <Text type="button" className="submit-work-button">
+              Submit Arwork
+            </Text>
+          </Link>
         </Col>
         <Col>
           <Text className="free-valuation">Get free valuation</Text>
