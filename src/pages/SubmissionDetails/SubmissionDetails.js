@@ -15,7 +15,7 @@ const SubmissionDetails = (props) => {
 
   useEffect(() => {
     const personData = data.find((item) => String(item.id) === personId);
-    console.log(personId, "useEfect personId");
+
     if (personData) {
       setSubmission(personData);
     }

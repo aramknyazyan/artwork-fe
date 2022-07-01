@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 90px;
 
   .backoffice-header {
     width: 100%;
@@ -81,7 +82,6 @@
       border-top-right-radius: 10px;
 
       .backoffice-columns-item {
-        width: 14%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -103,31 +103,122 @@
     }
 
     .person-row {
-      width: 99%;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 5px 0;
+      border-bottom: 1px solid #e6e6e6;
+      padding: 10px;
 
       .action-items {
         width: 14%;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
+
+        a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
 
       .backoffice-columns-item {
-        width: 14%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
 
-        .status {
+        .counter-offer {
+          padding: 5px;
+          border: 1px solid #ffe58f;
+          border-radius: 4px;
+          background-color: #fffbe6;
+          color: #faad14;
+          font-weight: 600;
+          padding: 5px 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .reviewed {
           padding: 5px;
           border: 1px solid #a4bcf2;
           border-radius: 4px;
           background-color: #f0f5ff;
           color: #2f54eb;
+          font-weight: 600;
+          padding: 5px 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .new {
+          padding: 5px;
+          border: 1px solid #87e8de;
+          border-radius: 4px;
+          background-color: #e6fffb;
+          color: #13c2c2;
+          font-weight: 600;
+          padding: 5px 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .pending {
+          padding: 5px;
+          border: 1px solid #d3adf7;
+          border-radius: 4px;
+          background-color: #f9f0ff;
+          color: #722ed1;
+          font-weight: 600;
+          padding: 5px 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .rejected-price-offer {
+          padding: 5px;
+          border: 1px solid #ffbb96;
+          border-radius: 4px;
+          background-color: #fff2e8;
+          color: #fa541c;
+          font-weight: 600;
+          padding: 5px 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .accepted-counter-offer {
+          padding: 5px;
+          border: 1px solid #8bbe0b;
+          border-radius: 4px;
+          background-color: #8bbe0b;
+          color: white;
+          font-weight: 600;
+          padding: 5px 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .rejected-counter-offer {
+          padding: 5px;
+          border: 1px solid #ffa39e;
+          border-radius: 4px;
+          background-color: #fff1f0;
+          color: #f5222d;
+          font-weight: 600;
+          padding: 5px 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .accepted-price-offer {
+          padding: 5px;
+          border: 1px solid #52c41a;
+          border-radius: 4px;
+          background-color: #52c41a;
+          color: white;
           font-weight: 600;
           padding: 5px 10px;
           display: flex;

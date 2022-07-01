@@ -14,9 +14,15 @@ import { FiInfo } from "react-icons/fi";
 
 import "./SubmitWork.scss";
 
+const { Text } = Typography;
+const FormItem = Form.Item;
+
 const SubmitWork = () => {
-  const { Text } = Typography;
-  const FormItem = Form.Item;
+  const [value, setValue] = useState();
+  const [showNumber, setShowNumber] = useState("none");
+  const [showEmail, setShowEmail] = useState("none");
+  const [numberRequared, setNumberRequared] = useState();
+  const [emailRequared, setEmailRequared] = useState();
 
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -26,13 +32,7 @@ const SubmitWork = () => {
     alert("Failed:", errorInfo);
   };
 
-  const [value, setValue] = useState();
-  const [showNumber, setShowNumber] = useState("none");
-  const [showEmail, setShowEmail] = useState("none");
-  const [numberRequared, setNumberRequared] = useState();
-  const [emailRequared, setEmailRequared] = useState();
   const onChange = (e) => {
-    console.log("radio checked", e.target.value);
     setValue(e.target.value);
     if (e.target.value === 1) {
       setShowNumber("display");

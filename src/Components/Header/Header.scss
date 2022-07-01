@@ -19,6 +19,7 @@
   top: 0;
   right: 0;
   left: 0;
+  box-shadow: 0px 1px 0px rgba(43, 65, 108, 0.1);
   .name {
     display: flex;
     align-items: center;
@@ -26,9 +27,16 @@
     color: v.$whiteColor;
     padding: 18px 0px;
     font-size: 15px;
-    .text {
+    .logo {
       font-size: 30px;
       color: v.$whiteColor;
+      font-weight: normal;
+      letter-spacing: 0.02rem;
+      font-family: freightDispPro;
+    }
+    .logo-black {
+      font-size: 30px;
+      color: v.$blackColor;
       font-weight: normal;
       letter-spacing: 0.02rem;
       font-family: freightDispPro;
@@ -52,8 +60,23 @@
       transition: 400ms;
       cursor: pointer;
     }
+    .pages-black {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      padding: 0px 20px 0px 20px;
+      margin-bottom: 0px;
+      color: v.$blackColor;
+      transition: 400ms;
+      cursor: pointer;
+    }
     .pages:hover {
       color: v.$secondColor;
+    }
+    .pages-black:hover {
+      color: v.$secondColor !important;
     }
   }
 }

@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getArtworkAction } from "../../redux/action";
+import { getArtworkListSelector } from "../../redux/selector/selector";
+
 import { Row, Col, Menu, Input, Typography, Select, Modal, Button } from "antd";
 import { Link } from "react-router-dom";
 
@@ -8,28 +13,35 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineDelete } from "react-icons/ai";
 
 import data from "../../data/data.json";
+import { backofficeSatatusMap } from "../../constants/backofficeStatusMap";
 
 import "./BackOffice.scss";
 
+const Text = Typography;
+const MenuItem = Menu.Item;
+const { Search } = Input;
+const { Option } = Select;
+
 const BackOffice = () => {
-  const Text = Typography;
-  const MenuItem = Menu.Item;
-  const { Search } = Input;
-  const { Option } = Select;
+  const [status, setStatus] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isArchiveModalVisible, setIsArchiveModalVisible] = useState(false);
+
+  const dispatch = useDispatch();
+  const artworksList = useSelector(getArtworkListSelector);
+
+  useEffect(() => {
+    dispatch(getArtworkAction());
+  }, [dispatch]);
+
   const onSearch = (value) => console.log(value);
 
-  const [status, setStatus] = useState(true);
-
   function handleChange(value) {
-    console.log(`selected ${value}`);
     setStatus(value);
     setTimeout(() => {
       console.log(status, "status");
     }, 1000);
   }
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isArchiveModalVisible, setIsArchiveModalVisible] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -146,6 +158,9 @@ const BackOffice = () => {
             </Col>
           </Col>
         </Row>
+        {artworksList?.items?.map((item) => {
+          return <p>{item}</p>;
+        })}
         {data.map((personData) => {
           return (
             <Row key={personData.id} className="person-row">
@@ -154,7 +169,9 @@ const BackOffice = () => {
                 <img src={personData.image} alt="img" className="image-item" />
               </Col>
               <Col className="backoffice-columns-item">
-                <div className="status">{personData.status}</div>
+                <div className={backofficeSatatusMap[personData.status]}>
+                  {personData.status}
+                </div>
               </Col>
               <Col className="backoffice-columns-item">
                 {personData.firstName} {personData.lastName}
@@ -170,7 +187,7 @@ const BackOffice = () => {
                   <VscEye
                     id={personData.id}
                     color="#5E3CEF"
-                    size={22}
+                    size={24}
                     className="actions-icon"
                   />
                 </Link>
