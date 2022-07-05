@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Input, Select, Button } from "antd";
 import { Link } from "react-router-dom";
 
-import data from "../../data/data.json";
+import data from "../../shared/data/data.json";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";

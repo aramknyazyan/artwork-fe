@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getSignedURL, postArtworkAction } from "../../redux/action";
+import { getSignedURLSelector } from "../../redux/selector/selector";
+
 import {
   Col,
   Form,
@@ -10,11 +15,13 @@ import {
   Upload,
   Select,
 } from "antd";
-import { FiInfo } from "react-icons/fi";
 
+import { FiInfo } from "react-icons/fi";
 import "./SubmitWork.scss";
 
 const { Text } = Typography;
+const { Option } = Select;
+const { Item } = Form;
 const FormItem = Form.Item;
 
 const SubmitWork = () => {
@@ -23,13 +30,25 @@ const SubmitWork = () => {
   const [showEmail, setShowEmail] = useState("none");
   const [numberRequared, setNumberRequared] = useState();
   const [emailRequared, setEmailRequared] = useState();
+  const [fileList, setFileList] = useState([]);
+  const [fileListTwo, setFileListTwo] = useState([]);
+
+  const dispatch = useDispatch();
+  const signedURL = useSelector(getSignedURLSelector);
+
+  console.log(signedURL, "signedURL");
+
+  useEffect(() => {
+    dispatch(getSignedURL());
+  }, [dispatch]);
 
   const onFinish = (values) => {
-    console.log("Success:", values);
+    console.log(values, "values");
+    dispatch(postArtworkAction(values));
   };
 
   const onFinishFailed = (errorInfo) => {
-    alert("Failed:", errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   const onChange = (e) => {
@@ -54,7 +73,6 @@ const SubmitWork = () => {
     }
     return e && e.fileList;
   };
-  const [fileList, setFileList] = useState([]);
 
   const onChangeUpload = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -64,13 +82,11 @@ const SubmitWork = () => {
   };
 
   const normFileTwo = (e) => {
-    console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
     return e && e.fileListTwo;
   };
-  const [fileListTwo, setFileListTwo] = useState([]);
 
   const onChangeUploadTwo = ({ fileList: newFileListTwo }) => {
     setFileListTwo(newFileListTwo);
@@ -93,8 +109,6 @@ const SubmitWork = () => {
     const imgWindow = window.open(src);
     imgWindow.document.write(image.outerHTML);
   };
-
-  const { Option } = Select;
 
   return (
     <Col className="submit-work">
@@ -256,7 +270,7 @@ const SubmitWork = () => {
             <Text className="input-title">
               Main Photo <span className="red-asterisk">*</span>
             </Text>
-            <Form.Item
+            <Item
               name="image"
               valuePropName="fileList"
               getValueFromEvent={normFile}
@@ -276,7 +290,7 @@ const SubmitWork = () => {
               >
                 {fileList.length < 1 && "+ Upload"}
               </Upload>
-            </Form.Item>
+            </Item>
           </Col>
 
           <Col className="form-item-upload">

@@ -12,8 +12,8 @@ import { VscEye } from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineDelete } from "react-icons/ai";
 
-import data from "../../data/data.json";
-import { backofficeSatatusMap } from "../../constants/backofficeStatusMap";
+import data from "../../shared/data/data.json";
+import { backofficeSatatusMap } from "../../shared/constants/backofficeStatusMap";
 
 import "./BackOffice.scss";
 
