@@ -13,7 +13,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineDelete } from "react-icons/ai";
 
 import data from "../../shared/data/data.json";
-import { backofficeSatatusMap } from "../../shared/constants/backofficeStatusMap";
+import { backofficeSatatusMap } from "../../shared/mapping/backofficeStatusMap";
 
 import "./BackOffice.scss";
 

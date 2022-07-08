@@ -14,7 +14,10 @@ import {
   Tooltip,
   Upload,
   Select,
+  message,
 } from "antd";
+
+import { materialConstant } from "../../shared/constants/postArtwork.constants";
 
 import { FiInfo } from "react-icons/fi";
 import "./SubmitWork.scss";
@@ -23,6 +26,7 @@ const { Text } = Typography;
 const { Option } = Select;
 const { Item } = Form;
 const FormItem = Form.Item;
+const { TextArea, Group } = Input;
 
 const SubmitWork = () => {
   const [value, setValue] = useState();
@@ -36,19 +40,34 @@ const SubmitWork = () => {
   const dispatch = useDispatch();
   const signedURL = useSelector(getSignedURLSelector);
 
-  console.log(signedURL, "signedURL");
+  console.log(signedURL);
 
   useEffect(() => {
     dispatch(getSignedURL());
   }, [dispatch]);
 
   const onFinish = (values) => {
-    console.log(values, "values");
-    dispatch(postArtworkAction(values));
+    dispatch(
+      postArtworkAction({
+        ...values,
+        presentedChannels: Object.values(values.presentedChannels),
+        width: Number(values.width),
+        depth: Number(values.depth),
+        height: Number(values.height),
+      })
+    );
+    message.success("Submit success!");
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    console.log({
+      ...errorInfo.values,
+      presentedChannels: Object.values(errorInfo.values.presentedChannels),
+      width: Number(errorInfo.values.width),
+    });
+
+    message.error("Submit failed!");
   };
 
   const onChange = (e) => {
@@ -67,7 +86,6 @@ const SubmitWork = () => {
   };
 
   const normFile = (e) => {
-    console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -76,9 +94,6 @@ const SubmitWork = () => {
 
   const onChangeUpload = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    setTimeout(() => {
-      console.log(fileList[0]?.status, "upload status");
-    }, 1000);
   };
 
   const normFileTwo = (e) => {
@@ -90,9 +105,6 @@ const SubmitWork = () => {
 
   const onChangeUploadTwo = ({ fileList: newFileListTwo }) => {
     setFileListTwo(newFileListTwo);
-    setTimeout(() => {
-      console.log(fileListTwo[0]?.status, "upload status two");
-    }, 1000);
   };
 
   const onPreview = async (file) => {
@@ -122,130 +134,134 @@ const SubmitWork = () => {
         autoComplete="off"
         className="submit-work-form"
       >
-        <Text className="form-section-title">Artist’s Details:</Text>
-        <Col className="form-items">
-          <Col className="form-item-input-col-small">
-            <Text className="input-title">
-              First Name <span className="red-asterisk">*</span>
-            </Text>
-            <FormItem
-              name="firstName"
-              rules={[
-                { required: true, message: "Please input your first name!" },
-              ]}
-            >
-              <Input placeholder="First Name" />
-            </FormItem>
+        <Input.Group className="group-inputs">
+          <Text className="form-section-title">Artist’s Details:</Text>
+          <Col className="form-items">
+            <Col className="form-item-input-col-small">
+              <Text className="input-title">
+                First Name <span className="red-asterisk">*</span>
+              </Text>
+              <FormItem
+                name={["artistInfo", "firstName"]}
+                rules={[
+                  { required: true, message: "Please input your first name!" },
+                ]}
+              >
+                <Input placeholder="First Name" />
+              </FormItem>
+            </Col>
+
+            <Col className="form-item-input-col-small">
+              <Text className="input-title">
+                Last Name <span className="red-asterisk">*</span>
+              </Text>
+              <FormItem
+                name={["artistInfo", "lastName"]}
+                rules={[
+                  { required: true, message: "Please input your last name!" },
+                ]}
+              >
+                <Input placeholder="Last Name" />
+              </FormItem>
+            </Col>
           </Col>
 
-          <Col className="form-item-input-col-small">
-            <Text className="input-title">
-              Last Name <span className="red-asterisk">*</span>
-            </Text>
-            <FormItem
-              name="lastName"
-              rules={[
-                { required: true, message: "Please input your last name!" },
-              ]}
-            >
-              <Input placeholder="Last Name" />
-            </FormItem>
+          <Col className="form-items">
+            <Col className="form-item-input-col-big">
+              <Text className="input-title">
+                Nationality <span className="red-asterisk">*</span>
+              </Text>
+              <FormItem
+                name={["artistInfo", "nationality"]}
+                rules={[
+                  { required: true, message: "Please input your nationality!" },
+                ]}
+              >
+                <Input placeholder="Nationality" />
+              </FormItem>
+            </Col>
           </Col>
-        </Col>
 
-        <Col className="form-items">
-          <Col className="form-item-input-col-big">
-            <Text className="input-title">
-              Nationality <span className="red-asterisk">*</span>
-            </Text>
-            <FormItem
-              name="nationality"
-              rules={[
-                { required: true, message: "Please input your nationality!" },
-              ]}
-            >
-              <Input placeholder="Nationality" />
-            </FormItem>
-          </Col>
-        </Col>
+          <Col className="form-items">
+            <Col className="form-item-input-col-big">
+              <Text className="input-title">
+                Preferred Communication Method{" "}
+                <span className="red-asterisk">*</span>
+              </Text>
+              <Radio.Group onChange={onChange} value={value}>
+                <Radio value={1}>
+                  Mobile Number
+                  <Tooltip title="This is for Whatsup or similar apps to contact with you.">
+                    <FiInfo size={16} className="tooltip-icon" />
+                  </Tooltip>
+                </Radio>
+                <Radio value={2}>Email Address</Radio>
+              </Radio.Group>
 
-        <Col className="form-items">
-          <Col className="form-item-input-col-big">
-            <Text className="input-title">
-              Preferred Communication Method{" "}
-              <span className="red-asterisk">*</span>
-            </Text>
-            <Radio.Group onChange={onChange} value={value}>
-              <Radio value={1}>
-                Mobile Number
-                <Tooltip title="This is for Whatsup or similar apps to contact with you.">
-                  <FiInfo size={16} className="tooltip-icon" />
-                </Tooltip>
-              </Radio>
-              <Radio value={2}>Email Address</Radio>
-            </Radio.Group>
+              <Col className={showNumber}>
+                <Group className="group-inputs">
+                  <Col className="form-items">
+                    <Col className="form-item-input-col-small">
+                      <Text className="input-title">
+                        Moblie Number <span className="red-asterisk">*</span>
+                      </Text>
+                      <FormItem
+                        name={["artistInfo", "mobile", "phone"]}
+                        rules={[
+                          {
+                            required: numberRequared,
+                            message: "Please input your mobile number!",
+                          },
+                        ]}
+                      >
+                        <Input placeholder="Mobile Number" />
+                      </FormItem>
+                    </Col>
 
-            <Col className={showNumber}>
-              <Col className="form-items">
-                <Col className="form-item-input-col-small">
-                  <Text className="input-title">
-                    Moblie Number <span className="red-asterisk">*</span>
-                  </Text>
-                  <FormItem
-                    name="mobileNumber"
-                    rules={[
-                      {
-                        required: numberRequared,
-                        message: "Please input your mobile number!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Mobile Number" />
-                  </FormItem>
-                </Col>
+                    <Col className="form-item-input-col-small">
+                      <Text className="input-title">
+                        Preferred Messanger
+                        <span className="red-asterisk"> *</span>
+                      </Text>
+                      <FormItem
+                        name={["artistInfo", "mobile", "prefferedMessenger"]}
+                        rules={[
+                          {
+                            required: numberRequared,
+                            message: "Please input your preferred messanger!",
+                          },
+                        ]}
+                      >
+                        <Input placeholder="Preferred Messanger" />
+                      </FormItem>
+                    </Col>
+                  </Col>
+                </Group>
+              </Col>
 
-                <Col className="form-item-input-col-small">
-                  <Text className="input-title">
-                    Preferred Messanger
-                    <span className="red-asterisk"> *</span>
-                  </Text>
-                  <FormItem
-                    name="preferredMessanger"
-                    rules={[
-                      {
-                        required: numberRequared,
-                        message: "Please input your preferred messanger!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Preferred Messanger" />
-                  </FormItem>
+              <Col className={showEmail}>
+                <Col className="form-items">
+                  <Col className="form-item-input-col-big">
+                    <Text className="input-title">
+                      Email Address <span className="red-asterisk"> *</span>
+                    </Text>
+                    <FormItem
+                      name={["artistInfo", "email"]}
+                      rules={[
+                        {
+                          required: emailRequared,
+                          message: "Please input your email address!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Email Address" />
+                    </FormItem>
+                  </Col>
                 </Col>
               </Col>
             </Col>
-
-            <Col className={showEmail}>
-              <Col className="form-items">
-                <Col className="form-item-input-col-big">
-                  <Text className="input-title">
-                    Email Address <span className="red-asterisk"> *</span>
-                  </Text>
-                  <FormItem
-                    name="email"
-                    rules={[
-                      {
-                        required: emailRequared,
-                        message: "Please input your email address!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Email Address" />
-                  </FormItem>
-                </Col>
-              </Col>
-            </Col>
           </Col>
-        </Col>
+        </Input.Group>
 
         <Text className="form-section-title">Artwork’s Details:</Text>
         <Text className="input-title">
@@ -271,7 +287,7 @@ const SubmitWork = () => {
               Main Photo <span className="red-asterisk">*</span>
             </Text>
             <Item
-              name="image"
+              name="artworkMainPhoto"
               valuePropName="fileList"
               getValueFromEvent={normFile}
               rules={[
@@ -297,8 +313,8 @@ const SubmitWork = () => {
             <Text className="input-title">
               Photo in situ <span className="red-asterisk">*</span>
             </Text>
-            <Form.Item
-              name="imageTwo"
+            <Item
+              name="artworkInSitu"
               valuePropName="fileList"
               getValueFromEvent={normFileTwo}
             >
@@ -311,7 +327,7 @@ const SubmitWork = () => {
               >
                 {fileListTwo.length < 1 && "+ Upload"}
               </Upload>
-            </Form.Item>
+            </Item>
           </Col>
         </Col>
 
@@ -334,9 +350,13 @@ const SubmitWork = () => {
               rules={[{ required: true, message: "Please select material!" }]}
             >
               <Select placeholder="Material">
-                <Option value="acril">Acril</Option>
-                <Option value="Acrill">Acrill</Option>
-                <Option value="Acrill">Acrill</Option>
+                {materialConstant.map((item, index) => {
+                  return (
+                    <Option value="acril" key={index}>
+                      {item}
+                    </Option>
+                  );
+                })}
               </Select>
             </FormItem>
           </Col>
@@ -364,19 +384,22 @@ const SubmitWork = () => {
               Height <span className="red-asterisk">*</span>
             </Text>
             <FormItem>
-              <Input.Group>
+              <Group>
                 <FormItem
-                  name={["heightSize", "height"]}
+                  name="height"
                   noStyle
                   rules={[
                     { required: true, message: "Please input image height!" },
                   ]}
                 >
-                  <Input placeholder="Height" className="small-imput" />
+                  <Input
+                    type="number"
+                    placeholder="Height"
+                    className="small-imput"
+                  />
                 </FormItem>
 
                 <FormItem
-                  name={["heightSize", "measurement"]}
                   noStyle
                   rules={[
                     { required: true, message: "measurement is required" },
@@ -388,7 +411,7 @@ const SubmitWork = () => {
                     <Option value="inch">inch</Option>
                   </Select>
                 </FormItem>
-              </Input.Group>
+              </Group>
             </FormItem>
           </Col>
 
@@ -397,19 +420,22 @@ const SubmitWork = () => {
               Width <span className="red-asterisk">*</span>
             </Text>
             <FormItem>
-              <Input.Group>
+              <Group>
                 <FormItem
-                  name={["widthSize", "width"]}
+                  name="width"
                   noStyle
                   rules={[
                     { required: true, message: "Please input image width!" },
                   ]}
                 >
-                  <Input placeholder="Width" className="small-imput" />
+                  <Input
+                    type="number"
+                    placeholder="Width"
+                    className="small-imput"
+                  />
                 </FormItem>
 
                 <FormItem
-                  name={["widthSize", "measurement"]}
                   noStyle
                   rules={[
                     { required: true, message: "Measurement is required" },
@@ -421,7 +447,7 @@ const SubmitWork = () => {
                     <Option value="inch">inch</Option>
                   </Select>
                 </FormItem>
-              </Input.Group>
+              </Group>
             </FormItem>
           </Col>
 
@@ -430,19 +456,22 @@ const SubmitWork = () => {
               Depth <span className="red-asterisk">*</span>
             </Text>
             <FormItem>
-              <Input.Group>
+              <Group>
                 <FormItem
-                  name={["depthSize", "depth"]}
+                  name="depth"
                   noStyle
                   rules={[
                     { required: true, message: "Please input image depth!" },
                   ]}
                 >
-                  <Input placeholder="Depth" className="small-imput" />
+                  <Input
+                    type="number"
+                    placeholder="Depth"
+                    className="small-imput"
+                  />
                 </FormItem>
 
                 <FormItem
-                  name={["depthSize", "measurement"]}
                   noStyle
                   rules={[
                     { required: true, message: "measurement is required" },
@@ -454,7 +483,7 @@ const SubmitWork = () => {
                     <Option value="inch">inch</Option>
                   </Select>
                 </FormItem>
-              </Input.Group>
+              </Group>
             </FormItem>
           </Col>
         </Col>
@@ -465,7 +494,7 @@ const SubmitWork = () => {
               Artwork Location <span className="red-asterisk">*</span>
             </Text>
             <FormItem
-              name="location"
+              name="currentLocation"
               rules={[{ required: true, message: "Please select country!" }]}
             >
               <Select placeholder="Location">
@@ -480,7 +509,7 @@ const SubmitWork = () => {
               Year of Creation <span className="red-asterisk">*</span>
             </Text>
             <FormItem
-              name="creationYear"
+              name="yearOfCreation"
               rules={[
                 { required: true, message: "Please select year of creation!" },
               ]}
@@ -499,13 +528,15 @@ const SubmitWork = () => {
               In what other online sales channels is this artwork presented?
               (optional)
             </Text>
-            <FormItem name="textArea" className="text-area">
-              <Input.TextArea
-                maxLength={300}
-                placeholder="Artwork Title"
-                className="text-area"
-              />
-            </FormItem>
+            <Group>
+              <FormItem name={["presentedChannels", []]} className="text-area">
+                <TextArea
+                  maxLength={300}
+                  placeholder="Artwork Title"
+                  className="text-area"
+                />
+              </FormItem>
+            </Group>
           </Col>
         </Col>
 
