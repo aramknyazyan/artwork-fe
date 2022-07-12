@@ -5,12 +5,14 @@ import {
   artworkReducer,
   getSignedURLReducer,
   postArtworkReducer,
+  putSignedURLReducer,
 } from "../reducer";
 
 const rootReducer = combineReducers({
   artworkList: artworkReducer,
   signedURL: getSignedURLReducer,
   postArtwork: postArtworkReducer,
+  putSignedURL: putSignedURLReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

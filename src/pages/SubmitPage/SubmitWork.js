@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { getSignedURL, postArtworkAction } from "../../redux/action";
-import { getSignedURLSelector } from "../../redux/selector/selector";
+import { useDispatch } from "react-redux";
+import { postArtworkAction, putSignedURLAction } from "../../redux/action";
 
 import {
   Col,
@@ -12,11 +11,11 @@ import {
   Typography,
   Radio,
   Tooltip,
-  Upload,
   Select,
   message,
 } from "antd";
 
+import Photos from "./components/Photos";
 import { materialConstant } from "../../shared/constants/postArtwork.constants";
 
 import { FiInfo } from "react-icons/fi";
@@ -24,39 +23,53 @@ import "./SubmitWork.scss";
 
 const { Text } = Typography;
 const { Option } = Select;
-const { Item } = Form;
 const FormItem = Form.Item;
 const { TextArea, Group } = Input;
 
 const SubmitWork = () => {
-  const [value, setValue] = useState();
-  const [showNumber, setShowNumber] = useState("none");
-  const [showEmail, setShowEmail] = useState("none");
-  const [numberRequared, setNumberRequared] = useState();
-  const [emailRequared, setEmailRequared] = useState();
-  const [fileList, setFileList] = useState([]);
-  const [fileListTwo, setFileListTwo] = useState([]);
+  const [value, setValue] = useState(1);
+  const [required, setRequired] = useState(true);
+  const [images, setImages] = useState({
+    artworkMainPhoto: { name: "", url: "" },
+    artworkInSitu: { name: "", url: "" },
+  });
 
   const dispatch = useDispatch();
-  const signedURL = useSelector(getSignedURLSelector);
 
-  console.log(signedURL);
+  const onFinish = async (values) => {
+    await dispatch(
+      putSignedURLAction(
+        images.artworkMainPhoto.url,
+        values.artworkMainPhoto?.[0]
+      )
+    );
 
-  useEffect(() => {
-    dispatch(getSignedURL());
-  }, [dispatch]);
+    await dispatch(
+      putSignedURLAction(images.artworkInSitu.url, values.artworkInSitu?.[0])
+    );
 
-  const onFinish = (values) => {
-    dispatch(
+    await dispatch(
       postArtworkAction({
         ...values,
         presentedChannels: Object.values(values.presentedChannels),
         width: Number(values.width),
         depth: Number(values.depth),
         height: Number(values.height),
+        artworkMainPhoto: images.artworkMainPhoto.name,
+        artworkInSitu: images.artworkInSitu.name,
       })
     );
-    message.success("Submit success!");
+
+    await message.success("Submit success!");
+    console.log({
+      ...values,
+      presentedChannels: Object.values(values.presentedChannels),
+      width: Number(values.width),
+      depth: Number(values.depth),
+      height: Number(values.height),
+      artworkMainPhoto: images.artworkMainPhoto.name,
+      artworkInSitu: images.artworkInSitu.name,
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -65,6 +78,10 @@ const SubmitWork = () => {
       ...errorInfo.values,
       presentedChannels: Object.values(errorInfo.values.presentedChannels),
       width: Number(errorInfo.values.width),
+      depth: Number(errorInfo.values.depth),
+      height: Number(errorInfo.values.height),
+      artworkMainPhoto: images.artworkMainPhoto.name,
+      artworkInSitu: images.artworkInSitu.name,
     });
 
     message.error("Submit failed!");
@@ -72,54 +89,7 @@ const SubmitWork = () => {
 
   const onChange = (e) => {
     setValue(e.target.value);
-    if (e.target.value === 1) {
-      setShowNumber("display");
-      setShowEmail("none");
-      setNumberRequared(true);
-      setEmailRequared(false);
-    } else if (e.target.value === 2) {
-      setShowNumber("none");
-      setShowEmail("display");
-      setNumberRequared(false);
-      setEmailRequared(true);
-    }
-  };
-
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
-
-  const onChangeUpload = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
-  const normFileTwo = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileListTwo;
-  };
-
-  const onChangeUploadTwo = ({ fileList: newFileListTwo }) => {
-    setFileListTwo(newFileListTwo);
-  };
-
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow.document.write(image.outerHTML);
+    setRequired((prev) => !prev);
   };
 
   return (
@@ -198,7 +168,7 @@ const SubmitWork = () => {
                 <Radio value={2}>Email Address</Radio>
               </Radio.Group>
 
-              <Col className={showNumber}>
+              <Col className={required ? "display" : "none"}>
                 <Group className="group-inputs">
                   <Col className="form-items">
                     <Col className="form-item-input-col-small">
@@ -209,7 +179,7 @@ const SubmitWork = () => {
                         name={["artistInfo", "mobile", "phone"]}
                         rules={[
                           {
-                            required: numberRequared,
+                            required: required,
                             message: "Please input your mobile number!",
                           },
                         ]}
@@ -227,7 +197,7 @@ const SubmitWork = () => {
                         name={["artistInfo", "mobile", "prefferedMessenger"]}
                         rules={[
                           {
-                            required: numberRequared,
+                            required: required,
                             message: "Please input your preferred messanger!",
                           },
                         ]}
@@ -239,7 +209,7 @@ const SubmitWork = () => {
                 </Group>
               </Col>
 
-              <Col className={showEmail}>
+              <Col className={required ? "none" : "display"}>
                 <Col className="form-items">
                   <Col className="form-item-input-col-big">
                     <Text className="input-title">
@@ -249,7 +219,7 @@ const SubmitWork = () => {
                       name={["artistInfo", "email"]}
                       rules={[
                         {
-                          required: emailRequared,
+                          required: !required,
                           message: "Please input your email address!",
                         },
                       ]}
@@ -282,53 +252,18 @@ const SubmitWork = () => {
         </Text>
 
         <Col className="form-items-upload-cols">
-          <Col className="form-item-upload">
-            <Text className="input-title">
-              Main Photo <span className="red-asterisk">*</span>
-            </Text>
-            <Item
-              name="artworkMainPhoto"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              rules={[
-                {
-                  required: true,
-                  message: "Please upload image!",
-                },
-              ]}
-            >
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={fileList}
-                onChange={onChangeUpload}
-                onPreview={onPreview}
-              >
-                {fileList.length < 1 && "+ Upload"}
-              </Upload>
-            </Item>
-          </Col>
-
-          <Col className="form-item-upload">
-            <Text className="input-title">
-              Photo in situ <span className="red-asterisk">*</span>
-            </Text>
-            <Item
-              name="artworkInSitu"
-              valuePropName="fileList"
-              getValueFromEvent={normFileTwo}
-            >
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={fileListTwo}
-                onChange={onChangeUploadTwo}
-                onPreview={onPreview}
-              >
-                {fileListTwo.length < 1 && "+ Upload"}
-              </Upload>
-            </Item>
-          </Col>
+          <Photos
+            name="Main Photo"
+            itemKey="artworkMainPhoto"
+            setImages={setImages}
+            images={images}
+          />
+          <Photos
+            name="Photo in situ"
+            itemKey="artworkInSitu"
+            setImages={setImages}
+            images={images}
+          />
         </Col>
 
         <Col className="form-items">

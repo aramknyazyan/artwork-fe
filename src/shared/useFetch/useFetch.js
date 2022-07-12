@@ -2,7 +2,7 @@ import Axios from "axios";
 
 export const getAPIaddress = () => "https://test-content-library.sbdagroup.com";
 
-const useFetch = (method, url, data, file) => {
+const useFetch = (method, url, data, headers) => {
   return new Promise(async (resolve, reject) => {
     const apiurl = `${process.env.REACT_APP_API_URL}${url}`;
 
@@ -10,7 +10,7 @@ const useFetch = (method, url, data, file) => {
       method: method.toLowerCase(),
       url: apiurl,
       data,
-      file,
+      headers,
     };
 
     try {
