@@ -2,6 +2,7 @@ import { getArtworkEnum } from "../action-type";
 import { GetArtwork } from "../service/service";
 
 export const getArtworkAction = () => async (dispatch) => {
+  dispatch({ type: getArtworkEnum.IS_LOADING_ARTWORK });
   try {
     const data = await GetArtwork();
 

@@ -1,4 +1,4 @@
-export const materialConstant = [
+export const materialConstants = [
   "Acryl",
   "Aluminium",
   "Steel",

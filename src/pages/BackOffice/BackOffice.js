@@ -4,16 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getArtworkAction } from "../../redux/action";
 import { getArtworkListSelector } from "../../redux/selector/selector";
 
-import { Row, Col, Menu, Input, Typography, Select, Modal, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Row, Col, Menu, Input, Typography, Select } from "antd";
+import BackOfficeTableRow from "./components/BackOfficeTableRow";
 
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
-import { VscEye } from "react-icons/vsc";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { AiOutlineDelete } from "react-icons/ai";
-
-import data from "../../shared/data/data.json";
-import { backofficeSatatusMap } from "../../shared/mapping/backofficeStatusMap";
 
 import "./BackOffice.scss";
 
@@ -24,11 +18,11 @@ const { Option } = Select;
 
 const BackOffice = () => {
   const [status, setStatus] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isArchiveModalVisible, setIsArchiveModalVisible] = useState(false);
 
   const dispatch = useDispatch();
   const artworksList = useSelector(getArtworkListSelector);
+
+  console.log(artworksList, "artworksList");
 
   useEffect(() => {
     dispatch(getArtworkAction());
@@ -42,27 +36,6 @@ const BackOffice = () => {
       console.log(status, "status");
     }, 1000);
   }
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-  const showArchiveModal = () => {
-    setIsArchiveModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-  const handleArchiveOk = () => {
-    setIsArchiveModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-  const handleArchiveCancel = () => {
-    setIsArchiveModalVisible(false);
-  };
 
   return (
     <Row className="backoffice-page">
@@ -159,123 +132,15 @@ const BackOffice = () => {
           </Col>
         </Row>
         {artworksList?.items?.map((item) => {
-          return <p>{item}</p>;
-        })}
-        {data.map((personData) => {
           return (
-            <Row key={personData.id} className="person-row">
-              <Col className="backoffice-columns-item">{personData.id}</Col>
-              <Col className="backoffice-columns-item">
-                <img src={personData.image} alt="img" className="image-item" />
-              </Col>
-              <Col className="backoffice-columns-item">
-                <div className={backofficeSatatusMap[personData.status]}>
-                  {personData.status}
-                </div>
-              </Col>
-              <Col className="backoffice-columns-item">
-                {personData.firstName} {personData.lastName}
-              </Col>
-              <Col className="backoffice-columns-item">
-                {personData.nationality}
-              </Col>
-              <Col className="backoffice-columns-item">
-                {personData.submitDate}
-              </Col>
-              <Col className="action-items">
-                <Link to={`/backoffice/${personData.id}`}>
-                  <VscEye
-                    id={personData.id}
-                    color="#5E3CEF"
-                    size={24}
-                    className="actions-icon"
-                  />
-                </Link>
-                <AiOutlineDelete
-                  color="#5E3CEF"
-                  size={22}
-                  className="actions-icon"
-                  onClick={showArchiveModal}
-                />
-                <Modal
-                  title="archive_modal"
-                  visible={isArchiveModalVisible}
-                  onOk={handleArchiveOk}
-                  onCancel={handleArchiveCancel}
-                >
-                  <Col className="modal-header">
-                    <AiOutlineDelete
-                      color="#5E3CEF"
-                      size={30}
-                      className="actions-icon"
-                    />
-                    <Col className="modal-text">
-                      <Text className="modal-header-content">
-                        Are you sure you want to archive this submission?
-                      </Text>
-                      <Col className="modal-buttons">
-                        <Button
-                          className="modal-button cancel"
-                          onClick={handleArchiveCancel}
-                        >
-                          No
-                        </Button>
-                        <Button
-                          className="modal-button archive"
-                          onClick={handleArchiveOk}
-                        >
-                          Confirm
-                        </Button>
-                      </Col>
-                    </Col>
-                  </Col>
-                </Modal>
-
-                <RiDeleteBin6Line
-                  color="#FF4D4F"
-                  size={22}
-                  className="actions-icon"
-                  onClick={showModal}
-                />
-                <Modal
-                  title="delete_modal"
-                  visible={isModalVisible}
-                  onOk={handleOk}
-                  onCancel={handleCancel}
-                >
-                  <Col className="modal-header">
-                    <RiDeleteBin6Line
-                      color="#FF4D4F"
-                      size={30}
-                      className="actions-icon"
-                    />
-                    <Col className="modal-text">
-                      <Text className="modal-header-content">
-                        Are you sure you want to delete this submission?
-                      </Text>
-                      <Text className="modal-header-subcontent">
-                        By deleting this submission, you will loose the content
-                        within.
-                      </Text>
-                      <Col className="modal-buttons">
-                        <Button
-                          className="modal-button cancel"
-                          onClick={handleCancel}
-                        >
-                          No
-                        </Button>
-                        <Button
-                          className="modal-button delete"
-                          onClick={handleOk}
-                        >
-                          Delete
-                        </Button>
-                      </Col>
-                    </Col>
-                  </Col>
-                </Modal>
-              </Col>
-            </Row>
+            <BackOfficeTableRow
+              firstName={item?.artistName}
+              submitDate={item?.createdDate}
+              status={item?.submissionStatus}
+              id={item?.id}
+              nationality={item?.currentLocation}
+              image={item?.artworkMainPhoto}
+            />
           );
         })}
       </Row>

@@ -16,7 +16,12 @@ import {
 } from "antd";
 
 import Photos from "./components/Photos";
-import { materialConstant } from "../../shared/constants/postArtwork.constants";
+import {
+  materialConstants,
+  locationConstants,
+  supportConstants,
+  creationYear,
+} from "../../shared/constants";
 
 import { FiInfo } from "react-icons/fi";
 import "./SubmitWork.scss";
@@ -55,35 +60,18 @@ const SubmitWork = () => {
         width: Number(values.width),
         depth: Number(values.depth),
         height: Number(values.height),
+        yearOfCreation: Number(values.yearOfCreation),
         artworkMainPhoto: images.artworkMainPhoto.name,
         artworkInSitu: images.artworkInSitu.name,
+        submissionStatus: "New",
+        status: "Submitted",
       })
     );
 
     await message.success("Submit success!");
-    console.log({
-      ...values,
-      presentedChannels: Object.values(values.presentedChannels),
-      width: Number(values.width),
-      depth: Number(values.depth),
-      height: Number(values.height),
-      artworkMainPhoto: images.artworkMainPhoto.name,
-      artworkInSitu: images.artworkInSitu.name,
-    });
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-    console.log({
-      ...errorInfo.values,
-      presentedChannels: Object.values(errorInfo.values.presentedChannels),
-      width: Number(errorInfo.values.width),
-      depth: Number(errorInfo.values.depth),
-      height: Number(errorInfo.values.height),
-      artworkMainPhoto: images.artworkMainPhoto.name,
-      artworkInSitu: images.artworkInSitu.name,
-    });
-
+  const onFinishFailed = () => {
     message.error("Submit failed!");
   };
 
@@ -285,9 +273,9 @@ const SubmitWork = () => {
               rules={[{ required: true, message: "Please select material!" }]}
             >
               <Select placeholder="Material">
-                {materialConstant.map((item, index) => {
+                {materialConstants.map((item, index) => {
                   return (
-                    <Option value="acril" key={index}>
+                    <Option value={item} key={index}>
                       {item}
                     </Option>
                   );
@@ -305,9 +293,13 @@ const SubmitWork = () => {
               rules={[{ required: true, message: "Please select support!" }]}
             >
               <Select placeholder="Support">
-                <Option value="canvas">Canvas</Option>
-                <Option value="Canvass">Canvass</Option>
-                <Option value="Canvass">Canvass</Option>
+                {supportConstants.map((item, index) => {
+                  return (
+                    <Option value={item} key={index}>
+                      {item}
+                    </Option>
+                  );
+                })}
               </Select>
             </FormItem>
           </Col>
@@ -433,8 +425,13 @@ const SubmitWork = () => {
               rules={[{ required: true, message: "Please select country!" }]}
             >
               <Select placeholder="Location">
-                <Option value="Armenia">Armenia</Option>
-                <Option value="Russia">Russia</Option>
+                {locationConstants.map((item, index) => {
+                  return (
+                    <Option value={item} key={index}>
+                      {item}
+                    </Option>
+                  );
+                })}
               </Select>
             </FormItem>
           </Col>
@@ -450,8 +447,13 @@ const SubmitWork = () => {
               ]}
             >
               <Select placeholder="Year of Creation">
-                <Option value="2021">2021</Option>
-                <Option value="2018">2018</Option>
+                {creationYear.map((item, index) => {
+                  return (
+                    <Option value={item} key={index}>
+                      {item}
+                    </Option>
+                  );
+                })}
               </Select>
             </FormItem>
           </Col>
