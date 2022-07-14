@@ -1,0 +1,87 @@
+@font-face {
+  font-family: freightDispPro;
+  src: url(../../Assets/Fonts/FreightDispPro/FreightDispPro.otf);
+}
+
+.success-page {
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  position: relative;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 78px;
+    box-shadow: 0px 1px 0px rgba(43, 65, 108, 0.1);
+    font-family: freightDispPro;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 38px;
+    letter-spacing: 0.02em;
+    position: absolute;
+    top: 0;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .title {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 34px;
+      margin-top: 16px;
+    }
+
+    .subtitle {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+      max-width: 461px;
+      margin-top: 24px;
+    }
+
+    .button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 9px 20px;
+      gap: 10px;
+      height: 38px;
+      background: #5e3cef;
+      border-radius: 6px;
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 18px;
+      color: white;
+      margin-top: 32px;
+      cursor: pointer;
+    }
+  }
+}

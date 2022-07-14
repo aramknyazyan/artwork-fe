@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postArtworkAction, putSignedURLAction } from "../../redux/action";
+import {
+  materialConstants,
+  locationConstants,
+  supportConstants,
+  preferredMessanger,
+  creationYear,
+} from "../../shared/constants";
 
 import {
   Col,
@@ -16,12 +24,6 @@ import {
 } from "antd";
 
 import Photos from "./components/Photos";
-import {
-  materialConstants,
-  locationConstants,
-  supportConstants,
-  creationYear,
-} from "../../shared/constants";
 
 import { FiInfo } from "react-icons/fi";
 import "./SubmitWork.scss";
@@ -39,6 +41,7 @@ const SubmitWork = () => {
     artworkInSitu: { name: "", url: "" },
   });
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
@@ -54,21 +57,28 @@ const SubmitWork = () => {
     );
 
     await dispatch(
-      postArtworkAction({
-        ...values,
-        presentedChannels: Object.values(values.presentedChannels),
-        width: Number(values.width),
-        depth: Number(values.depth),
-        height: Number(values.height),
-        yearOfCreation: Number(values.yearOfCreation),
-        artworkMainPhoto: images.artworkMainPhoto.name,
-        artworkInSitu: images.artworkInSitu.name,
-        submissionStatus: "New",
-        status: "Submitted",
-      })
+      postArtworkAction(
+        {
+          ...values,
+          presentedChannels: Object.values(values.presentedChannels),
+          width: Number(values.width),
+          depth: Number(values.depth),
+          height: Number(values.height),
+          yearOfCreation: Number(values.yearOfCreation),
+          artworkMainPhoto: images.artworkMainPhoto.name,
+          artworkInSitu: images.artworkInSitu.name,
+          submissionStatus: "New",
+          status: "Submitted",
+        },
+        (status) => {
+          if (status.type === "success") {
+            navigate("/success");
+          } else {
+            message.error("Submit failed!");
+          }
+        }
+      )
     );
-
-    await message.success("Submit success!");
   };
 
   const onFinishFailed = () => {
@@ -132,10 +142,18 @@ const SubmitWork = () => {
               <FormItem
                 name={["artistInfo", "nationality"]}
                 rules={[
-                  { required: true, message: "Please input your nationality!" },
+                  { required: true, message: "Please select nationality!" },
                 ]}
               >
-                <Input placeholder="Nationality" />
+                <Select placeholder="Nationality" className="select">
+                  {locationConstants.map((item, index) => {
+                    return (
+                      <Option value={item} key={index}>
+                        {item}
+                      </Option>
+                    );
+                  })}
+                </Select>
               </FormItem>
             </Col>
           </Col>
@@ -182,15 +200,26 @@ const SubmitWork = () => {
                         <span className="red-asterisk"> *</span>
                       </Text>
                       <FormItem
-                        name={["artistInfo", "mobile", "prefferedMessenger"]}
+                        name={["artistInfo", "nationality"]}
                         rules={[
                           {
-                            required: required,
-                            message: "Please input your preferred messanger!",
+                            required: true,
+                            message: "Please select nationality!",
                           },
                         ]}
                       >
-                        <Input placeholder="Preferred Messanger" />
+                        <Select
+                          placeholder="Preferred Messanger"
+                          className="select"
+                        >
+                          {preferredMessanger.map((item, index) => {
+                            return (
+                              <Option value={item} key={index}>
+                                {item}
+                              </Option>
+                            );
+                          })}
+                        </Select>
                       </FormItem>
                     </Col>
                   </Col>
@@ -272,7 +301,7 @@ const SubmitWork = () => {
               name="material"
               rules={[{ required: true, message: "Please select material!" }]}
             >
-              <Select placeholder="Material">
+              <Select placeholder="Material" className="select">
                 {materialConstants.map((item, index) => {
                   return (
                     <Option value={item} key={index}>
@@ -292,7 +321,7 @@ const SubmitWork = () => {
               name="support"
               rules={[{ required: true, message: "Please select support!" }]}
             >
-              <Select placeholder="Support">
+              <Select placeholder="Support" className="select">
                 {supportConstants.map((item, index) => {
                   return (
                     <Option value={item} key={index}>
@@ -424,7 +453,7 @@ const SubmitWork = () => {
               name="currentLocation"
               rules={[{ required: true, message: "Please select country!" }]}
             >
-              <Select placeholder="Location">
+              <Select placeholder="Location" className="select">
                 {locationConstants.map((item, index) => {
                   return (
                     <Option value={item} key={index}>
@@ -446,7 +475,7 @@ const SubmitWork = () => {
                 { required: true, message: "Please select year of creation!" },
               ]}
             >
-              <Select placeholder="Year of Creation">
+              <Select placeholder="Year of Creation" className="select">
                 {creationYear.map((item, index) => {
                   return (
                     <Option value={item} key={index}>

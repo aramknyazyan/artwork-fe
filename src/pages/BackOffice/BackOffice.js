@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getArtworkAction } from "../../redux/action";
 import { getArtworkListSelector } from "../../redux/selector/selector";
 
-import { Row, Col, Menu, Input, Typography, Select } from "antd";
+import { Row, Col, Menu, Input, Typography, Select, Skeleton } from "antd";
 import BackOfficeTableRow from "./components/BackOfficeTableRow";
 
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
@@ -17,25 +17,12 @@ const { Search } = Input;
 const { Option } = Select;
 
 const BackOffice = () => {
-  const [status, setStatus] = useState(true);
-
   const dispatch = useDispatch();
-  const artworksList = useSelector(getArtworkListSelector);
-
-  console.log(artworksList, "artworksList");
+  const { data, loading } = useSelector(getArtworkListSelector);
 
   useEffect(() => {
     dispatch(getArtworkAction());
   }, [dispatch]);
-
-  const onSearch = (value) => console.log(value);
-
-  function handleChange(value) {
-    setStatus(value);
-    setTimeout(() => {
-      console.log(status, "status");
-    }, 1000);
-  }
 
   return (
     <Row className="backoffice-page">
@@ -52,17 +39,8 @@ const BackOffice = () => {
           <Text className="text">New Submissions</Text>
         </Row>
         <Row className="search-submissions">
-          <Search
-            placeholder="Search"
-            allowClear
-            onSearch={onSearch}
-            style={{ width: 200 }}
-          />
-          <Select
-            style={{ width: 200 }}
-            onChange={handleChange}
-            placeholder="Status"
-          >
+          <Search placeholder="Search" allowClear style={{ width: 200 }} />
+          <Select style={{ width: 200 }} placeholder="Status">
             <Option value="reviewed">reviewed</Option>
             <Option value="counter_offer">counter offer</Option>
             <Option value="accepted_price_offer">accepted price offer</Option>
@@ -131,18 +109,22 @@ const BackOffice = () => {
             </Col>
           </Col>
         </Row>
-        {artworksList?.items?.map((item) => {
-          return (
-            <BackOfficeTableRow
-              firstName={item?.artistName}
-              submitDate={item?.createdDate}
-              status={item?.submissionStatus}
-              id={item?.id}
-              nationality={item?.currentLocation}
-              image={item?.artworkMainPhoto}
-            />
-          );
-        })}
+        {loading ? (
+          <Skeleton active />
+        ) : (
+          data?.items?.map((item) => {
+            return (
+              <BackOfficeTableRow
+                firstName={item?.artistName}
+                submitDate={item?.createdDate}
+                status={item?.submissionStatus}
+                id={item?.id}
+                nationality={item?.currentLocation}
+                image={item?.artworkMainPhoto}
+              />
+            );
+          })
+        )}
       </Row>
     </Row>
   );

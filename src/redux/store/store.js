@@ -7,6 +7,7 @@ import {
   postArtworkReducer,
   putSignedURLReducer,
   artworkByIdReducer,
+  artworkHistoryReducer,
 } from "../reducer";
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   postArtwork: postArtworkReducer,
   putSignedURL: putSignedURLReducer,
   artworkById: artworkByIdReducer,
+  artworkHistory: artworkHistoryReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

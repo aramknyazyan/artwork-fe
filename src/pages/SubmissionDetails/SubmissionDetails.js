@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getArtworkByIdAction } from "../../redux/action";
-import { getArtworkByIdSelector } from "../../redux/selector/selector";
+import {
+  getArtworkByIdSelector,
+  getArtworkHistorySelector,
+} from "../../redux/selector/selector";
+import {
+  getArtworkByIdAction,
+  patchArtworkAction,
+  getArtworkHistoryAction,
+} from "../../redux/action";
 
-import { Row, Col, Typography, Input, Select, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Row, Col, Typography, Input, Form, message } from "antd";
+import PriceOfferHelper from "./components/PriceOfferHelper/PriceOfferHelper";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -13,29 +21,38 @@ import "./SubmissionDetails.scss";
 
 const { Text } = Typography;
 const Textarea = Input.TextArea;
-const Option = Select;
+const FormItem = Form.Item;
 
-const SubmissionDetails = (props) => {
+const SubmissionDetails = () => {
   const dispatch = useDispatch();
   const artworkById = useSelector(getArtworkByIdSelector);
-  const personId = props.match.params.id;
-
-  console.log(artworkById, "artworkById");
+  const artworkHostory = useSelector(getArtworkHistorySelector);
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getArtworkByIdAction(personId));
-  }, [dispatch, personId]);
+    dispatch(getArtworkByIdAction(id));
+    dispatch(getArtworkHistoryAction(id));
+  }, [dispatch, id, artworkHostory?.note]);
 
-  const selectAfter = (
-    <Select defaultValue="USD" className="select-before">
-      <Option value="USD">USD</Option>
-      <Option value="EUR">EUR</Option>
-    </Select>
-  );
+  const onFinishNote = async (values) => {
+    dispatch(
+      patchArtworkAction(id, {
+        ...values,
+        status: "Submitted",
+        submissionStatus: "Price Offer",
+      })
+    );
+
+    await message.success("Submit success!");
+  };
+
+  const onFinishFailed = () => {
+    message.error("Submit failed!");
+  };
 
   return (
     <Row className="submission-details">
-      <Link to={`/backoffice/${Number(personId) - 1}`}>
+      <Link to={`/backoffice/${Number(id) - 1}`}>
         <Col className="submission-change">
           <IoIosArrowBack size={30} className="submission-change-arrow" />
         </Col>
@@ -163,29 +180,46 @@ const SubmissionDetails = (props) => {
           <Col className="container">
             <Text className="content-header">Send Price Offer</Text>
 
-            <Row className="detail">
-              <Text className="data-header">
-                <span className="dark">Note</span> (for internal use only)
-              </Text>
-              <Textarea className="note" />
-              <Row className="textarea-save-row">
-                <button className="textarea-save-button">Save</button>
+            <Form
+              name="submit-note"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              initialValues={{ remember: true }}
+              onFinish={onFinishNote}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+              className="submit-work-form"
+            >
+              <Row className="detail">
+                <Text className="data-header">
+                  <span className="dark">Note</span> (for internal use only)
+                </Text>
+                <FormItem name="note">
+                  <Textarea
+                    className="note"
+                    type="text"
+                    defaultValue={
+                      artworkHostory.note ? artworkHostory.note : ""
+                    }
+                  />
+                </FormItem>
+                <Row className="textarea-save-row">
+                  <button
+                    className="textarea-save-button"
+                    type="primary"
+                    htmlType="submit"
+                  >
+                    Save
+                  </button>
+                </Row>
               </Row>
-            </Row>
-
-            <Row className="detail">
-              <Text className="data-header">
-                <span className="dark">Price Offer</span>
-              </Text>
-              <Input addonAfter={selectAfter} />
-              <Row className="send-price">
-                <Button className="send-price-button">Send Price Offer</Button>
-              </Row>
-            </Row>
+            </Form>
+            {/* <PriceOffer id={id} /> */}
+            <PriceOfferHelper history={artworkHostory} />
           </Col>
         </Row>
       </Row>
-      <Link to={`/backoffice/${Number(personId) + 1}`}>
+      <Link to={`/backoffice/${Number(id) + 1}`}>
         <Col className="submission-change">
           <IoIosArrowForward size={30} className="submission-change-arrow" />
         </Col>
