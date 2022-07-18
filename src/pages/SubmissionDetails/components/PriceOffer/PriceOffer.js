@@ -1,8 +1,10 @@
 import React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { patchArtworkAction } from "../../../../redux/action";
-import { getArtworkHistorySelector } from "../../../../redux/selector/selector";
+import { useDispatch } from "react-redux";
+import {
+  patchArtworkAction,
+  getArtworkByIdAction,
+} from "../../../../redux/action";
 
 import { Form, Button, Typography, Input, Row, message, Select } from "antd";
 
@@ -12,21 +14,29 @@ const { Text } = Typography;
 const FormItem = Form.Item;
 const Option = Select;
 
-const PriceOffer = ({ id }) => {
-  const dispatch = useDispatch;
-  const artworkHostory = useSelector(getArtworkHistorySelector);
+const selectAfter = (
+  <Select defaultValue="USD" className="select-before">
+    <Option value="USD">USD</Option>
+    <Option value="EUR">EUR</Option>
+  </Select>
+);
 
-  console.log(artworkHostory);
+const PriceOffer = ({ id }) => {
+  const dispatch = useDispatch();
+
+  console.log(id);
 
   const onFinishPriceOffer = async (values) => {
     dispatch(
       patchArtworkAction(id, {
         ...values,
         status: "Submitted",
-        submissionStatus: "Price Offer",
+        submissionStatus: "Pending",
         priceOffer: Number(values.priceOffer),
       })
     );
+
+    dispatch(getArtworkByIdAction(id));
 
     await message.success("Submit success!");
   };
@@ -34,13 +44,6 @@ const PriceOffer = ({ id }) => {
   const onFinishFailed = () => {
     message.error("Submit failed!");
   };
-
-  const selectAfter = (
-    <Select defaultValue="USD" className="select-before">
-      <Option value="USD">USD</Option>
-      <Option value="EUR">EUR</Option>
-    </Select>
-  );
 
   return (
     <Form

@@ -3,11 +3,13 @@ import React from "react";
 import PriceOffer from "../PriceOffer/PriceOffer";
 import Price from "../Price/Price";
 
-const PriceOfferHelper = ({ history }) => {
+const PriceOfferHelper = ({ history, id, status }) => {
   if (history.priceOffer === 0) {
-    return <PriceOffer />;
+    return <PriceOffer id={id} />;
   } else if (history.priceOffer !== 0) {
-    return <Price priceOffer={history.priceOffer} />;
+    return <Price history={history} status={status} />;
+  } else {
+    return <PriceOffer />;
   }
 };
 

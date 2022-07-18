@@ -1,0 +1,308 @@
+.status-accepted {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 24px;
+
+  .title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+  }
+
+  .accepted {
+    width: 100%;
+
+    .select {
+      width: 100%;
+
+      .ant-select-arrow {
+        color: white;
+      }
+    }
+
+    .ant-select-selection-item {
+      width: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      flex: none;
+      display: flex;
+      text-align: center;
+    }
+
+    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 1px 8px;
+      gap: 10px;
+      height: 38px;
+      background: #52c41a;
+      border-radius: 6px;
+      flex: none;
+      order: 1;
+      align-self: stretch;
+      flex-grow: 0;
+      border: none;
+      color: white;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  .sold {
+    width: 100%;
+
+    .ant-select-selection-item {
+      width: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      flex: none;
+      display: flex;
+      text-align: center;
+    }
+
+    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 1px 8px;
+      gap: 10px;
+      height: 38px;
+      background: #1890ff;
+      border-radius: 6px;
+      flex: none;
+      order: 1;
+      align-self: stretch;
+      flex-grow: 0;
+      border: none;
+      color: white;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+
+      .ant-select-selection-item {
+        width: 120px;
+      }
+    }
+
+    .select {
+      width: 100%;
+
+      .ant-select-arrow {
+        color: white;
+      }
+    }
+  }
+
+  .shipped {
+    width: 100%;
+
+    .ant-select-selection-item {
+      width: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      flex: none;
+      display: flex;
+      text-align: center;
+    }
+
+    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 1px 8px;
+      gap: 10px;
+      height: 38px;
+      background: #eb2f96;
+      border-radius: 6px;
+      flex: none;
+      order: 1;
+      align-self: stretch;
+      flex-grow: 0;
+      border: none;
+      color: white;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+
+      .ant-select-selection-item {
+        width: 120px;
+      }
+    }
+
+    .select {
+      width: 100%;
+
+      .ant-select-arrow {
+        color: white;
+      }
+    }
+  }
+
+  .published {
+    width: 100%;
+
+    .ant-select-selection-item {
+      width: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      flex: none;
+      display: flex;
+      text-align: center;
+    }
+
+    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 1px 8px;
+      gap: 10px;
+      height: 38px;
+      background: #13c2c2;
+      border-radius: 6px;
+      flex: none;
+      order: 1;
+      align-self: stretch;
+      flex-grow: 0;
+      border: none;
+      color: white;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+
+      .ant-select-selection-item {
+        width: 120px;
+      }
+    }
+
+    .select {
+      width: 100%;
+
+      .ant-select-arrow {
+        color: white;
+      }
+    }
+  }
+
+  .history {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #5e3cef;
+    padding: 6px 12px;
+    margin-top: 24px;
+
+    .icon {
+      margin-right: 8px;
+      cursor: pointer;
+    }
+  }
+}
+
+.history-modal {
+  width: 628px;
+  .ant-modal-content {
+    border-radius: 16px;
+  }
+
+  .modal-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #30333d;
+    margin-bottom: 36px;
+  }
+
+  .modal-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 12px;
+      gap: 10px;
+      width: 100px;
+      height: 36px;
+      background: #5e3cef;
+      border-radius: 4px;
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      color: #ffffff;
+      margin-top: 36px;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 36px;
+  }
+  .content {
+    .ant-steps-vertical {
+      .ant-steps-item {
+        .ant-steps-item-container {
+          display: flex;
+          align-items: center;
+
+          .ant-steps-vertical .ant-steps-dot {
+            .ant-steps-item-icon {
+              margin-top: 10px !important;
+            }
+          }
+
+          .ant-steps-item-content {
+            min-height: auto;
+          }
+        }
+      }
+    }
+  }
+}

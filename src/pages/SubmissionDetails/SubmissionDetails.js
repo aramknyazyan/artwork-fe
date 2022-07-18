@@ -26,13 +26,13 @@ const FormItem = Form.Item;
 const SubmissionDetails = () => {
   const dispatch = useDispatch();
   const artworkById = useSelector(getArtworkByIdSelector);
-  const artworkHostory = useSelector(getArtworkHistorySelector);
+  const artworkHistory = useSelector(getArtworkHistorySelector);
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(getArtworkByIdAction(id));
     dispatch(getArtworkHistoryAction(id));
-  }, [dispatch, id, artworkHostory?.note]);
+  }, [dispatch, id, artworkHistory?.note]);
 
   const onFinishNote = async (values) => {
     dispatch(
@@ -60,7 +60,8 @@ const SubmissionDetails = () => {
       <Row className="submission-details-card">
         <Row>
           <Text className="location">
-            Submissions <MdKeyboardArrowRight size={14} />{" "}
+            <Link to="/e2899344-0676-11ed-b939-0242ac120002">Submissions</Link>{" "}
+            <MdKeyboardArrowRight size={14} />
             <span className="blue-text">
               Artwork ID: {artworkById ? artworkById.id : "not found"}
             </span>
@@ -199,7 +200,7 @@ const SubmissionDetails = () => {
                     className="note"
                     type="text"
                     defaultValue={
-                      artworkHostory.note ? artworkHostory.note : ""
+                      artworkHistory.note ? artworkHistory.note : ""
                     }
                   />
                 </FormItem>
@@ -214,8 +215,11 @@ const SubmissionDetails = () => {
                 </Row>
               </Row>
             </Form>
-            {/* <PriceOffer id={id} /> */}
-            <PriceOfferHelper history={artworkHostory} />
+            <PriceOfferHelper
+              history={artworkHistory}
+              id={artworkById?.id}
+              status={artworkById?.submissionStatus}
+            />
           </Col>
         </Row>
       </Row>

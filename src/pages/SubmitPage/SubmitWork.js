@@ -200,7 +200,7 @@ const SubmitWork = () => {
                         <span className="red-asterisk"> *</span>
                       </Text>
                       <FormItem
-                        name={["artistInfo", "nationality"]}
+                        name={["artistInfo", "mobile", "prefferedMessenger"]}
                         rules={[
                           {
                             required: true,

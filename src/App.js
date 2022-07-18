@@ -26,7 +26,10 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/submit" element={<SubmitWork />} />
-                <Route path="/backoffice" element={<BackOffice />} />
+                <Route
+                  path="/e2899344-0676-11ed-b939-0242ac120002"
+                  element={<BackOffice />}
+                />
                 <Route path="/backoffice/:id" element={<SubmissionDetails />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/artists" element={<Artists />} />
