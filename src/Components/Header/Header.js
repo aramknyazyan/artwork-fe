@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Typography } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Card from "../Card/Card";
 
@@ -8,25 +8,43 @@ import "./Header.scss";
 
 const Header = () => {
   const { Text } = Typography;
+  const location = useLocation();
+  const [pathname, setPathname] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setPathname(false);
+    } else {
+      setPathname(true);
+    }
+  }, [location.pathname]);
+
   return (
     <Row className="navigation">
       <Card>
         <Col className="name">
           <Link to="/">
-            <Text className="text">Edelweiss Gallery</Text>
+            <Text className={pathname ? "logo-black" : "logo"}>
+              Edelweiss Gallery
+            </Text>
           </Link>
         </Col>
         <Col>
           <Col className="menu">
-            <Text key="about" className="pages">
+            <Link className={pathname ? "pages-black" : "pages"} to="/about">
               About
-            </Text>
-            <Text key="artists" className="pages">
+            </Link>
+
+            <Link className={pathname ? "pages-black" : "pages"} to="/artists">
               Artists
-            </Text>
-            <Text key="contact" className="pages">
-              <Link to="/backoffice">Contact Us</Link>
-            </Text>
+            </Link>
+
+            <Link
+              className={pathname ? "pages-black" : "pages"}
+              to="/backoffice"
+            >
+              Contact Us
+            </Link>
           </Col>
         </Col>
       </Card>

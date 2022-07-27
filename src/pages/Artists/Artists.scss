@@ -1,0 +1,44 @@
+@font-face {
+  font-family: Inter;
+  src: url(../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+.artists-page {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 90px;
+
+  .artists-page-card {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .page-title {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin: 0 0 40px 0;
+
+      .title {
+        font-family: FreightDispPro;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 76px;
+        line-height: 97px;
+        letter-spacing: 0.02em;
+      }
+    }
+
+    .artists-section {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  }
+}

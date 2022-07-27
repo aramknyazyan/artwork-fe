@@ -1,0 +1,15 @@
+export const backofficeSatatusMap = {
+  "counter offer": "counter-offer",
+  Reviewed: "reviewed",
+  New: "new",
+  Pending: "pending",
+  "Rejected Price Offer": "rejected-price-offer",
+  "Accepted Counter Offer": "accepted-counter-offer",
+  "Rejected Counter Offer": "rejected-counter-offer",
+  "Accepted Price Offer": "accepted-price-offer",
+  "Price Offer": "new",
+  "Counter Offer": "accepted-counter-offer",
+  Published: "pending",
+  Sold: "accepted-price-offer",
+  Shipped: "accepted-price-offer",
+};

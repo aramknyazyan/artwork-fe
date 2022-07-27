@@ -17,7 +17,7 @@ const SellArWork = () => {
         <Col>
           <Link to="/Submit">
             <Text type="button" className="submit-work-button">
-              Submit Arwork
+              Submit Artwork
             </Text>
           </Link>
         </Col>

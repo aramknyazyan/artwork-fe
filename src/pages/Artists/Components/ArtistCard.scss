@@ -1,0 +1,26 @@
+@font-face {
+  font-family: Inter;
+  src: url(../../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+.artist-card {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 20px 0;
+
+  .artist-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .artist-name {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 39px;
+    margin: 20px 0;
+  }
+}
