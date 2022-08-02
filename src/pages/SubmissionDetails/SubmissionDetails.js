@@ -5,41 +5,68 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getArtworkByIdSelector,
   getArtworkHistorySelector,
+  getArtworkListSelector,
 } from "../../redux/selector/selector";
 import {
   getArtworkByIdAction,
   patchArtworkAction,
   getArtworkHistoryAction,
+  getArtworkAction,
 } from "../../redux/action";
 
 import { Row, Col, Typography, Input, Form, message } from "antd";
 import PriceOfferHelper from "./components/PriceOfferHelper/PriceOfferHelper";
+import { artworkDataMapping } from "../../shared/mapping/backofficeDataMap";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "./SubmissionDetails.scss";
+import { useState } from "react";
 
 const { Text } = Typography;
 const Textarea = Input.TextArea;
 const FormItem = Form.Item;
 
 const SubmissionDetails = () => {
+  const [artwork, setArtwork] = useState();
+
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const artworkById = useSelector(getArtworkByIdSelector);
-  const artworkHistory = useSelector(getArtworkHistorySelector);
   const { id } = useParams();
 
+  const { data } = useSelector(getArtworkListSelector);
+  const artworkById = useSelector(getArtworkByIdSelector);
+  const artworkHistory = useSelector(getArtworkHistorySelector);
+
   useEffect(() => {
-    dispatch(getArtworkByIdAction(id));
-    dispatch(getArtworkHistoryAction(id));
-  }, [dispatch, id, artworkHistory?.note]);
+    dispatch(getArtworkAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    form.setFieldsValue({ note: artworkHistory?.note });
+  }, [artworkHistory]);
+
+  useEffect(() => {
+    setArtwork(artworkDataMapping(data?.items));
+  }, [data]);
+
+  useEffect(() => {
+    const artworkId = artwork?.filter(({ key }) => {
+      return String(key) === id;
+    });
+    dispatch(getArtworkByIdAction(artworkId?.[0]?.id));
+    dispatch(getArtworkHistoryAction(artworkId?.[0]?.id));
+  }, [dispatch, id, artwork]);
 
   const onFinishNote = async (values) => {
+    const artworkId = artwork?.filter(({ key }) => {
+      return String(key) === id;
+    });
     dispatch(
-      patchArtworkAction(id, {
+      patchArtworkAction(artworkId?.[0]?.id, {
         ...values,
-        status: "Submitted",
-        submissionStatus: "Price Offer",
+        status: artworkById?.status,
+        submissionStatus: artworkById?.submissionStatus,
       })
     );
 
@@ -50,10 +77,29 @@ const SubmissionDetails = () => {
     message.error("Submit failed!");
   };
 
+  const decrementLocationID = (event) => {
+    if (id <= 0) {
+      event.preventDefault();
+    }
+  };
+
+  const incrementLocationID = (event) => {
+    if (id >= artwork?.length) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <Row className="submission-details">
-      <Link to={`/backoffice/${Number(id) - 1}`}>
-        <Col className="submission-change">
+      <Link
+        to={`/e2899344-0676-11ed-b939-0242ac120002/${Number(id) - 1}`}
+        onClick={decrementLocationID}
+      >
+        <Col
+          className={
+            id === "0" ? "submission-change-diabled" : "submission-change"
+          }
+        >
           <IoIosArrowBack size={30} className="submission-change-arrow" />
         </Col>
       </Link>
@@ -182,13 +228,12 @@ const SubmissionDetails = () => {
             <Text className="content-header">Send Price Offer</Text>
 
             <Form
+              form={form}
               name="submit-note"
               labelCol={{ span: 8 }}
               wrapperCol={{ span: 16 }}
-              initialValues={{ remember: true }}
               onFinish={onFinishNote}
               onFinishFailed={onFinishFailed}
-              autoComplete="off"
               className="submit-work-form"
             >
               <Row className="detail">
@@ -196,13 +241,7 @@ const SubmissionDetails = () => {
                   <span className="dark">Note</span> (for internal use only)
                 </Text>
                 <FormItem name="note">
-                  <Textarea
-                    className="note"
-                    type="text"
-                    defaultValue={
-                      artworkHistory.note ? artworkHistory.note : ""
-                    }
-                  />
+                  <Textarea className="note" type="text" />
                 </FormItem>
                 <Row className="textarea-save-row">
                   <button
@@ -223,8 +262,17 @@ const SubmissionDetails = () => {
           </Col>
         </Row>
       </Row>
-      <Link to={`/backoffice/${Number(id) + 1}`}>
-        <Col className="submission-change">
+      <Link
+        to={`/e2899344-0676-11ed-b939-0242ac120002/${Number(id) + 1}`}
+        onClick={incrementLocationID}
+      >
+        <Col
+          className={
+            id === String(artwork?.length)
+              ? "submission-change-diabled"
+              : "submission-change"
+          }
+        >
           <IoIosArrowForward size={30} className="submission-change-arrow" />
         </Col>
       </Link>

@@ -24,8 +24,6 @@ const selectAfter = (
 const PriceOffer = ({ id }) => {
   const dispatch = useDispatch();
 
-  console.log(id);
-
   const onFinishPriceOffer = async (values) => {
     dispatch(
       patchArtworkAction(id, {

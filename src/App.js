@@ -30,7 +30,10 @@ function App() {
                   path="/e2899344-0676-11ed-b939-0242ac120002"
                   element={<BackOffice />}
                 />
-                <Route path="/backoffice/:id" element={<SubmissionDetails />} />
+                <Route
+                  path="/e2899344-0676-11ed-b939-0242ac120002/:id"
+                  element={<SubmissionDetails />}
+                />
                 <Route path="/about" element={<About />} />
                 <Route path="/artists" element={<Artists />} />
                 <Route path="/success" element={<SuccessPage />} />

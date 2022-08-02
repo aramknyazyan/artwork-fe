@@ -1,24 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { patchArtworkAction } from "../../../redux/action/patchArtwork";
 
 import { Link } from "react-router-dom";
 import { Row, Col, Typography, Modal, Button } from "antd";
 import { backofficeSatatusMap } from "../../../shared/mapping/backofficeStatusMap";
 
-import { VscEye } from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineDelete } from "react-icons/ai";
+import { VscEye } from "react-icons/vsc";
 import "./BackOfficeTableRow.scss";
 
 const { Text } = Typography;
 
 const BackOfficeTableRow = ({
   firstName,
-  status,
+  submissionStatus,
   id,
   image,
   nationality,
   submitDate,
 }) => {
+  const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isArchiveModalVisible, setIsArchiveModalVisible] = useState(false);
 
@@ -30,9 +33,21 @@ const BackOfficeTableRow = ({
   };
 
   const handleOk = () => {
+    dispatch(
+      patchArtworkAction(id, {
+        status: "Deleted",
+        submissionStatus: submissionStatus,
+      })
+    );
     setIsModalVisible(false);
   };
   const handleArchiveOk = () => {
+    dispatch(
+      patchArtworkAction(id, {
+        status: "Archived",
+        submissionStatus: submissionStatus,
+      })
+    );
     setIsArchiveModalVisible(false);
   };
 
@@ -50,13 +65,15 @@ const BackOfficeTableRow = ({
         <img src={image} alt="img" className="image-item" />
       </Col>
       <Col className="backoffice-columns-item">
-        <div className={backofficeSatatusMap[status]}>{status}</div>
+        <div className={backofficeSatatusMap[submissionStatus]}>
+          {submissionStatus}
+        </div>
       </Col>
       <Col className="backoffice-columns-item">{firstName}</Col>
       <Col className="backoffice-columns-item">{nationality}</Col>
       <Col className="backoffice-columns-item">{submitDate}</Col>
       <Col className="action-items">
-        <Link to={`/backoffice/${id}`}>
+        <Link to={`/e2899344-0676-11ed-b939-0242ac120002/${id}`}>
           <VscEye id={id} color="#5E3CEF" size={24} className="actions-icon" />
         </Link>
         <AiOutlineDelete
@@ -100,8 +117,8 @@ const BackOfficeTableRow = ({
         </Modal>
 
         <RiDeleteBin6Line
-          color="#FF4D4F"
-          size={22}
+          color="#5E3CEF"
+          size={30}
           className="actions-icon"
           onClick={showModal}
         />
