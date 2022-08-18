@@ -1,6 +1,7 @@
 import useFetch from "../../shared/useFetch/useFetch";
 
-export const GetArtwork = () => useFetch("get", "/artwork");
+export const GetArtwork = (queryParams) =>
+  useFetch("get", `/artwork?${queryParams}`);
 
 export const GetArtworkById = (id) => useFetch("get", `/artwork/${id}`);
 

@@ -1,10 +1,10 @@
 import { getArtworkEnum } from "../action-type";
 import { GetArtwork } from "../service/service";
 
-export const getArtworkAction = () => async (dispatch) => {
+export const getArtworkAction = (queryParams) => async (dispatch) => {
   dispatch({ type: getArtworkEnum.IS_LOADING_ARTWORK });
   try {
-    const data = await GetArtwork();
+    const data = await GetArtwork(queryParams);
 
     dispatch({
       type: getArtworkEnum.GET_ARTWORK_SUCCESS,

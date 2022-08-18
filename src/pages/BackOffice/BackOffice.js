@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getArtworkAction } from "../../redux/action";
 import { getArtworkListSelector } from "../../redux/selector/selector";
+import {
+  backofficeDataMapping,
+  artworkDataMapping,
+} from "../../shared/mapping/backofficeDataMap";
 
-import { Row, Col, Menu, Input, Typography, Select, Skeleton } from "antd";
-import BackOfficeTableRow from "./components/BackOfficeTableRow";
-
-import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
+import { Row, Menu, Input, Typography, Select, Table } from "antd";
+import { statusSelectConstants } from "../../shared/constants/statusSelect.constants";
+import { columns } from "../../shared/constants/tableHeadItems";
 
 import "./BackOffice.scss";
 
@@ -17,20 +21,78 @@ const { Search } = Input;
 const { Option } = Select;
 
 const BackOffice = () => {
+  const [backofficeData, setBackofficeData] = useState([]);
+  const [current, setCurrent] = useState("");
+
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { data, loading } = useSelector(getArtworkListSelector);
 
   useEffect(() => {
-    dispatch(getArtworkAction());
-  }, [dispatch]);
+    dispatch(getArtworkAction(searchParams));
+  }, [dispatch, searchParams]);
+
+  useEffect(() => {
+    setBackofficeData(data?.items);
+    artworkDataMapping(data?.items);
+  }, [data]);
+
+  useEffect(() => {
+    setSearchParams({});
+  }, []);
+
+  const menuChangeHandler = (e) => {
+    if (e.key === "") {
+      var params = Object.fromEntries(new URLSearchParams(searchParams));
+      delete params.status;
+      setSearchParams(params);
+    } else {
+      setSearchParams({
+        ...Object.fromEntries(new URLSearchParams(searchParams)),
+        status: e.key,
+      });
+    }
+
+    setCurrent(e.key);
+  };
+
+  const selectChangeHandler = (key) => {
+    if (key === undefined) {
+      var params = Object.fromEntries(new URLSearchParams(searchParams));
+      delete params.submissionStatus;
+      setSearchParams(params);
+    } else {
+      setSearchParams({
+        ...Object.fromEntries(new URLSearchParams(searchParams)),
+        submissionStatus: key,
+      });
+    }
+  };
+
+  const onSearch = (e) => {
+    if (!e.length) {
+      var params = Object.fromEntries(new URLSearchParams(searchParams));
+      delete params.keyword;
+      setSearchParams(params);
+    } else {
+      setSearchParams({
+        ...Object.fromEntries(new URLSearchParams(searchParams)),
+        keyword: e,
+      });
+    }
+  };
 
   return (
     <Row className="backoffice-page">
       <Row className="backoffice-header">
-        <Menu className="backoffice-header-menu">
-          <MenuItem key="backoffice">Backoffice</MenuItem>
-          <MenuItem key="submissions">Submissions</MenuItem>
-          <MenuItem key="archive">Archive</MenuItem>
+        <Menu
+          className="backoffice-header-menu"
+          selectedKeys={current}
+          onClick={menuChangeHandler}
+        >
+          <MenuItem key="">Backoffice</MenuItem>
+          <MenuItem key="Submitted">Submissions</MenuItem>
+          <MenuItem key="Archived">Archive</MenuItem>
         </Menu>
       </Row>
 
@@ -39,92 +101,37 @@ const BackOffice = () => {
           <Text className="text">New Submissions</Text>
         </Row>
         <Row className="search-submissions">
-          <Search placeholder="Search" allowClear style={{ width: 200 }} />
-          <Select style={{ width: 200 }} placeholder="Status">
-            <Option value="reviewed">reviewed</Option>
-            <Option value="counter_offer">counter offer</Option>
-            <Option value="accepted_price_offer">accepted price offer</Option>
-            <Option value="rejected_counter_offer">
-              rejected counter offer
-            </Option>
-            <Option value="accepted_counter_offer">
-              accepted counter offer
-            </Option>
-            <Option value="rejected_price_offer">rejected price offer</Option>
-            <Option value="pending">pending</Option>
-            <Option value="new">new</Option>
+          <Search
+            placeholder="Search"
+            allowClear
+            style={{ width: 200 }}
+            onSearch={onSearch}
+          />
+          <Select
+            style={{ width: 200 }}
+            placeholder="Status"
+            onChange={selectChangeHandler}
+            allowClear
+          >
+            {statusSelectConstants.map((item) => {
+              return <Option value={item}>{item}</Option>;
+            })}
           </Select>
         </Row>
       </Row>
 
       <Row className="backoffice">
-        <Row className="backoffice-columns">
-          <Col className="backoffice-columns-item">
-            <Text>Id</Text>
-            <Col className="arrows">
-              <TiArrowSortedUp />
-              <TiArrowSortedDown />
-            </Col>
-          </Col>
-          <Col className="backoffice-columns-item">
-            <Text>Photo</Text>
-            <Col className="arrows">
-              <TiArrowSortedUp />
-              <TiArrowSortedDown />
-            </Col>
-          </Col>
-          <Col className="backoffice-columns-item">
-            <Text>Status</Text>
-            <Col className="arrows">
-              <TiArrowSortedUp />
-              <TiArrowSortedDown />
-            </Col>
-          </Col>
-          <Col className="backoffice-columns-item">
-            <Text>Artist Name</Text>
-            <Col className="arrows">
-              <TiArrowSortedUp />
-              <TiArrowSortedDown />
-            </Col>
-          </Col>
-          <Col className="backoffice-columns-item">
-            <Text>Country</Text>
-            <Col className="arrows">
-              <TiArrowSortedUp />
-              <TiArrowSortedDown />
-            </Col>
-          </Col>
-          <Col className="backoffice-columns-item">
-            <Text>Submission Date</Text>
-            <Col className="arrows">
-              <TiArrowSortedUp />
-              <TiArrowSortedDown />
-            </Col>
-          </Col>
-          <Col className="backoffice-columns-item">
-            <Text>Actions</Text>
-            <Col className="arrows">
-              <TiArrowSortedUp style={{ margin: "0" }} />
-              <TiArrowSortedDown />
-            </Col>
-          </Col>
-        </Row>
-        {loading ? (
-          <Skeleton active />
-        ) : (
-          data?.items?.map((item) => {
-            return (
-              <BackOfficeTableRow
-                firstName={item?.artistName}
-                submitDate={item?.createdDate}
-                status={item?.submissionStatus}
-                id={item?.id}
-                nationality={item?.currentLocation}
-                image={item?.artworkMainPhoto}
-              />
-            );
-          })
-        )}
+        <Table
+          columns={columns}
+          dataSource={data ? backofficeDataMapping(backofficeData) : ""}
+          loading={loading}
+          pagination={{
+            defaultPageSize: 10,
+            showSizeChanger: true,
+            pageSizeOptions: ["10", "20", "30"],
+          }}
+          className="tableANTD"
+        />
       </Row>
     </Row>
   );
