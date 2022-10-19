@@ -114,7 +114,11 @@ const BackOffice = () => {
             allowClear
           >
             {statusSelectConstants.map((item) => {
-              return <Option value={item}>{item}</Option>;
+              return (
+                <Option value={item} key={item}>
+                  {item}
+                </Option>
+              );
             })}
           </Select>
         </Row>

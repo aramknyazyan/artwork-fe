@@ -4,14 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSignedURL } from "../../../redux/action";
 import { getSignedURLSelector } from "../../../redux/selector/selector";
 
-import { Form, Typography, Upload } from "antd";
+import { Form, Typography, Upload, message } from "antd";
 
 import "./Photos.scss";
 
 const { Text } = Typography;
 const { Item } = Form;
 
-const Photos = ({ name, itemKey, setImages, images }) => {
+const Photos = ({
+  name,
+  itemKey,
+  setImages,
+  images,
+  setUploadFile,
+  uploadFile,
+}) => {
   const [fileList, setFileList] = useState([]);
 
   const dispatch = useDispatch();
@@ -39,6 +46,9 @@ const Photos = ({ name, itemKey, setImages, images }) => {
   }, [dispatch, signedURL, name]); // eslint-disable-line
 
   const normFile = (e) => {
+    if (itemKey === "artworkMainPhoto") {
+      setUploadFile({ ...uploadFile, artworkMainPhoto: e.file });
+    }
     if (Array.isArray(e)) {
       return e;
     }
@@ -90,6 +100,9 @@ const Photos = ({ name, itemKey, setImages, images }) => {
           fileList={fileList}
           onChange={onChangeUpload}
           onPreview={onPreview}
+          beforeUpload={() => {
+            return false;
+          }}
         >
           {fileList.length < 1 && "+ Upload"}
         </Upload>
