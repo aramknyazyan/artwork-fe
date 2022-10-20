@@ -21,24 +21,27 @@ const Photos = ({ name, itemKey, setImages, images }) => {
     dispatch(getSignedURL());
   }, [dispatch]);
 
-  useEffect(() => {
+  const normFile = (e) => {
     if (signedURL[0] && itemKey === "artworkMainPhoto") {
       setImages({
         ...images,
         artworkMainPhoto: {
           name: signedURL[0]?.filename,
           url: signedURL[0]?.url,
+          image: e.file,
         },
       });
     } else if (signedURL[1] && itemKey === "artworkInSitu") {
       setImages({
         ...images,
-        artworkInSitu: { name: signedURL[1]?.filename, url: signedURL[0]?.url },
+        artworkInSitu: {
+          name: signedURL[1]?.filename,
+          url: signedURL[1]?.url,
+          image: e.file,
+        },
       });
     }
-  }, [dispatch, signedURL, name]); // eslint-disable-line
 
-  const normFile = (e) => {
     if (Array.isArray(e)) {
       return e;
     }
@@ -90,6 +93,9 @@ const Photos = ({ name, itemKey, setImages, images }) => {
           fileList={fileList}
           onChange={onChangeUpload}
           onPreview={onPreview}
+          beforeUpload={() => {
+            return false;
+          }}
         >
           {fileList.length < 1 && "+ Upload"}
         </Upload>

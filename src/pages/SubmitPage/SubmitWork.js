@@ -37,8 +37,8 @@ const SubmitWork = () => {
   const [value, setValue] = useState(1);
   const [required, setRequired] = useState(true);
   const [images, setImages] = useState({
-    artworkMainPhoto: { name: "", url: "" },
-    artworkInSitu: { name: "", url: "" },
+    artworkMainPhoto: { name: "", url: "", image: null },
+    artworkInSitu: { name: "", url: "", image: null },
   });
 
   const navigate = useNavigate();
@@ -47,13 +47,18 @@ const SubmitWork = () => {
   const onFinish = async (values) => {
     await dispatch(
       putSignedURLAction(
-        images.artworkMainPhoto.url,
-        values.artworkMainPhoto?.[0]
+        images.artworkMainPhoto?.url,
+        images.artworkMainPhoto?.image,
+        images.artworkMainPhoto?.image?.type
       )
     );
 
     await dispatch(
-      putSignedURLAction(images.artworkInSitu.url, values.artworkInSitu?.[0])
+      putSignedURLAction(
+        images.artworkInSitu.url,
+        images.artworkInSitu?.image,
+        images.artworkInSitu?.image?.type
+      )
     );
 
     await dispatch(

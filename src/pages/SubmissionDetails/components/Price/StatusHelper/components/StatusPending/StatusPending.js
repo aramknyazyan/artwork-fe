@@ -12,7 +12,7 @@ const { Step } = Steps;
 
 const StatusPending = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const artworkHostory = useSelector(getArtworkHistorySelector);
+  const artworkHistory = useSelector(getArtworkHistorySelector);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -30,8 +30,8 @@ const StatusPending = () => {
     <div className="status-pending">
       <div className="title">Price Offer Status:</div>
       <div className="status">PENDING</div>
-      <div className="history">
-        <VscEye className="icon" size={18} onClick={showModal} />
+      <div className="history" onClick={showModal}>
+        <VscEye className="icon" size={18} />
         <div>View History</div>
       </div>
       <Modal
@@ -44,28 +44,38 @@ const StatusPending = () => {
         <div className="content">
           <div className="modal-title">View History</div>
           <Steps progressDot direction="vertical" current={1}>
-            {artworkHostory?.priceOfferDate && (
-              <Step title={`Price offer: ${artworkHostory?.priceOfferDate}`} />
-            )}
-            {artworkHostory?.counterOfferDate && (
+            {artworkHistory?.createdDate && (
               <Step
-                title={`Counter offer: ${artworkHostory?.counterOfferDate}`}
-                description="This is a description."
+                title={`Created date: ${artworkHistory?.createdDate}`}
+                className="steps"
               />
             )}
-            {artworkHostory?.rejectedOfferDate && (
+            {artworkHistory?.priceOffer && (
               <Step
-                title={`Rejected offer: ${artworkHostory?.rejectedOfferDate}`}
+                title={`Price offer: ${artworkHistory?.priceOffer}`}
+                className="steps"
               />
             )}
-            {artworkHostory?.acceptedOfferDate && (
+            {artworkHistory?.counterOfferDate && (
               <Step
-                title={`Price offer: ${artworkHostory?.acceptedOfferDate}`}
+                title={`Counter offer: ${artworkHistory?.counterOfferDate}`}
+                className="steps"
+              />
+            )}
+            {artworkHistory?.rejectedOfferDate && (
+              <Step
+                title={`Rejected offer: ${artworkHistory?.rejectedOfferDate}`}
+                className="steps"
+              />
+            )}
+            {artworkHistory?.acceptedOfferDate && (
+              <Step
+                title={`Price offer: ${artworkHistory?.acceptedOfferDate}`}
               />
             )}
           </Steps>
           <div className="modal-button">
-            <div className="button" onClick={showModal}>
+            <div className="button" onClick={handleCancel}>
               Close
             </div>
           </div>

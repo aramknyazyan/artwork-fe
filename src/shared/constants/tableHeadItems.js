@@ -45,7 +45,7 @@ export const columns = [
     dataIndex: "actions",
     width: "16%",
     render: (_, record) => {
-      return <ActionButtons id={record.key} submissionStatus={record.status} />;
+      return <ActionButtons id={record.id} submissionStatus={record.status} />;
     },
   },
 ];
