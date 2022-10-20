@@ -12,7 +12,7 @@ const { Step } = Steps;
 
 const StatusPending = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const artworkHostory = useSelector(getArtworkHistorySelector);
+  const artworkHistory = useSelector(getArtworkHistorySelector);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -44,31 +44,31 @@ const StatusPending = () => {
         <div className="content">
           <div className="modal-title">View History</div>
           <Steps progressDot direction="vertical" current={1}>
-            {artworkHostory?.createdDate && (
+            {artworkHistory?.createdDate && (
               <Step
                 title={`Created date: ${artworkHostory?.createdDate}`}
                 className="steps"
               />
             )}
-            {artworkHostory?.priceOffer && (
+            {artworkHistory?.priceOffer && (
               <Step
                 title={`Price offer: ${artworkHostory?.priceOffer}`}
                 className="steps"
               />
             )}
-            {artworkHostory?.counterOfferDate && (
+            {artworkHistory?.counterOfferDate && (
               <Step
                 title={`Counter offer: ${artworkHostory?.counterOfferDate}`}
                 className="steps"
               />
             )}
-            {artworkHostory?.rejectedOfferDate && (
+            {artworkHistory?.rejectedOfferDate && (
               <Step
                 title={`Rejected offer: ${artworkHostory?.rejectedOfferDate}`}
                 className="steps"
               />
             )}
-            {artworkHostory?.acceptedOfferDate && (
+            {artworkHistory?.acceptedOfferDate && (
               <Step
                 title={`Price offer: ${artworkHostory?.acceptedOfferDate}`}
               />

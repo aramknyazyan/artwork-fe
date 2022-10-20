@@ -21,23 +21,6 @@ const Photos = ({ name, itemKey, setImages, images }) => {
     dispatch(getSignedURL());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (signedURL[0] && itemKey === "artworkMainPhoto") {
-  //     setImages({
-  //       ...images,
-  //       artworkMainPhoto: {
-  //         name: signedURL[0]?.filename,
-  //         url: signedURL[0]?.url,
-  //       },
-  //     });
-  //   } else if (signedURL[1] && itemKey === "artworkInSitu") {
-  //     setImages({
-  //       ...images,
-  //       artworkInSitu: { name: signedURL[1]?.filename, url: signedURL[0]?.url },
-  //     });
-  //   }
-  // }, [dispatch, signedURL, name]); // eslint-disable-line
-
   const normFile = (e) => {
     if (signedURL[0] && itemKey === "artworkMainPhoto") {
       setImages({
