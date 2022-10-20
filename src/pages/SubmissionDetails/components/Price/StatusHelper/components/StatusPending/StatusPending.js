@@ -46,31 +46,31 @@ const StatusPending = () => {
           <Steps progressDot direction="vertical" current={1}>
             {artworkHistory?.createdDate && (
               <Step
-                title={`Created date: ${artworkHostory?.createdDate}`}
+                title={`Created date: ${artworkHistory?.createdDate}`}
                 className="steps"
               />
             )}
             {artworkHistory?.priceOffer && (
               <Step
-                title={`Price offer: ${artworkHostory?.priceOffer}`}
+                title={`Price offer: ${artworkHistory?.priceOffer}`}
                 className="steps"
               />
             )}
             {artworkHistory?.counterOfferDate && (
               <Step
-                title={`Counter offer: ${artworkHostory?.counterOfferDate}`}
+                title={`Counter offer: ${artworkHistory?.counterOfferDate}`}
                 className="steps"
               />
             )}
             {artworkHistory?.rejectedOfferDate && (
               <Step
-                title={`Rejected offer: ${artworkHostory?.rejectedOfferDate}`}
+                title={`Rejected offer: ${artworkHistory?.rejectedOfferDate}`}
                 className="steps"
               />
             )}
             {artworkHistory?.acceptedOfferDate && (
               <Step
-                title={`Price offer: ${artworkHostory?.acceptedOfferDate}`}
+                title={`Price offer: ${artworkHistory?.acceptedOfferDate}`}
               />
             )}
           </Steps>
