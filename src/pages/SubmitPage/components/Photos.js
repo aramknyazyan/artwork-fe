@@ -4,21 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSignedURL } from "../../../redux/action";
 import { getSignedURLSelector } from "../../../redux/selector/selector";
 
-import { Form, Typography, Upload, message } from "antd";
+import { Form, Typography, Upload } from "antd";
 
 import "./Photos.scss";
 
 const { Text } = Typography;
 const { Item } = Form;
 
-const Photos = ({
-  name,
-  itemKey,
-  setImages,
-  images,
-  setUploadFile,
-  uploadFile,
-}) => {
+const Photos = ({ name, itemKey, setImages, images }) => {
   const [fileList, setFileList] = useState([]);
 
   const dispatch = useDispatch();
@@ -28,27 +21,44 @@ const Photos = ({
     dispatch(getSignedURL());
   }, [dispatch]);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (signedURL[0] && itemKey === "artworkMainPhoto") {
+  //     setImages({
+  //       ...images,
+  //       artworkMainPhoto: {
+  //         name: signedURL[0]?.filename,
+  //         url: signedURL[0]?.url,
+  //       },
+  //     });
+  //   } else if (signedURL[1] && itemKey === "artworkInSitu") {
+  //     setImages({
+  //       ...images,
+  //       artworkInSitu: { name: signedURL[1]?.filename, url: signedURL[0]?.url },
+  //     });
+  //   }
+  // }, [dispatch, signedURL, name]); // eslint-disable-line
+
+  const normFile = (e) => {
     if (signedURL[0] && itemKey === "artworkMainPhoto") {
       setImages({
         ...images,
         artworkMainPhoto: {
           name: signedURL[0]?.filename,
           url: signedURL[0]?.url,
+          image: e.file,
         },
       });
     } else if (signedURL[1] && itemKey === "artworkInSitu") {
       setImages({
         ...images,
-        artworkInSitu: { name: signedURL[1]?.filename, url: signedURL[0]?.url },
+        artworkInSitu: {
+          name: signedURL[1]?.filename,
+          url: signedURL[1]?.url,
+          image: e.file,
+        },
       });
     }
-  }, [dispatch, signedURL, name]); // eslint-disable-line
 
-  const normFile = (e) => {
-    if (itemKey === "artworkMainPhoto") {
-      setUploadFile({ ...uploadFile, artworkMainPhoto: e.file });
-    }
     if (Array.isArray(e)) {
       return e;
     }

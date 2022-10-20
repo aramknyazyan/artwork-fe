@@ -36,31 +36,28 @@ const { TextArea, Group } = Input;
 const SubmitWork = () => {
   const [value, setValue] = useState(1);
   const [required, setRequired] = useState(true);
-  const [uploadFile, setUploadFile] = useState({
-    artworkMainPhoto: "",
-  });
   const [images, setImages] = useState({
-    artworkMainPhoto: { name: "", url: "" },
-    artworkInSitu: { name: "", url: "" },
+    artworkMainPhoto: { name: "", url: "", image: null },
+    artworkInSitu: { name: "", url: "", image: null },
   });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onFinish = async (values) => { 
+  const onFinish = async (values) => {
     await dispatch(
       putSignedURLAction(
-        images.artworkMainPhoto.url,
-        uploadFile.artworkMainPhoto,
-        values.artworkInSitu?.[0]?.type
+        images.artworkMainPhoto?.url,
+        images.artworkMainPhoto?.image,
+        images.artworkMainPhoto?.image?.type
       )
     );
 
     await dispatch(
       putSignedURLAction(
         images.artworkInSitu.url,
-        values.artworkInSitu?.[0],
-        values.artworkInSitu?.[0]?.type
+        images.artworkInSitu?.image,
+        images.artworkInSitu?.image?.type
       )
     );
 
@@ -282,15 +279,12 @@ const SubmitWork = () => {
             itemKey="artworkMainPhoto"
             setImages={setImages}
             images={images}
-            uploadFile={uploadFile}
-            setUploadFile={setUploadFile}
           />
           <Photos
             name="Photo in situ"
             itemKey="artworkInSitu"
             setImages={setImages}
             images={images}
-            setUploadFile={setUploadFile}
           />
         </Col>
 

@@ -30,8 +30,8 @@ const StatusPending = () => {
     <div className="status-pending">
       <div className="title">Price Offer Status:</div>
       <div className="status">PENDING</div>
-      <div className="history">
-        <VscEye className="icon" size={18} onClick={showModal} />
+      <div className="history" onClick={showModal}>
+        <VscEye className="icon" size={18} />
         <div>View History</div>
       </div>
       <Modal
@@ -44,18 +44,28 @@ const StatusPending = () => {
         <div className="content">
           <div className="modal-title">View History</div>
           <Steps progressDot direction="vertical" current={1}>
-            {artworkHostory?.priceOfferDate && (
-              <Step title={`Price offer: ${artworkHostory?.priceOfferDate}`} />
+            {artworkHostory?.createdDate && (
+              <Step
+                title={`Created date: ${artworkHostory?.createdDate}`}
+                className="steps"
+              />
+            )}
+            {artworkHostory?.priceOffer && (
+              <Step
+                title={`Price offer: ${artworkHostory?.priceOffer}`}
+                className="steps"
+              />
             )}
             {artworkHostory?.counterOfferDate && (
               <Step
                 title={`Counter offer: ${artworkHostory?.counterOfferDate}`}
-                description="This is a description."
+                className="steps"
               />
             )}
             {artworkHostory?.rejectedOfferDate && (
               <Step
                 title={`Rejected offer: ${artworkHostory?.rejectedOfferDate}`}
+                className="steps"
               />
             )}
             {artworkHostory?.acceptedOfferDate && (
@@ -65,7 +75,7 @@ const StatusPending = () => {
             )}
           </Steps>
           <div className="modal-button">
-            <div className="button" onClick={showModal}>
+            <div className="button" onClick={handleCancel}>
               Close
             </div>
           </div>

@@ -72,8 +72,8 @@ const StatusAccepted = () => {
           </Option>
         </Select>
       </div>
-      <div className="history">
-        <VscEye className="icon" size={18} onClick={showModal} />
+      <div className="history" onClick={showModal}>
+        <VscEye className="icon" size={18} />
         <div>View History</div>
       </div>
       <Modal

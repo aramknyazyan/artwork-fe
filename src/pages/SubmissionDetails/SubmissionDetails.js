@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,6 +30,7 @@ const FormItem = Form.Item;
 const SubmissionDetails = () => {
   const [artwork, setArtwork] = useState();
 
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -51,20 +52,15 @@ const SubmissionDetails = () => {
   }, [data]);
 
   useEffect(() => {
-    const artworkId = artwork?.filter(({ key }) => {
-      return String(key) === id;
-    });
-    dispatch(getArtworkByIdAction(artworkId?.[0]?.id));
-    dispatch(getArtworkHistoryAction(artworkId?.[0]?.id));
+    dispatch(getArtworkByIdAction(id));
+    dispatch(getArtworkHistoryAction(id));
   }, [dispatch, id, artwork]);
 
   const onFinishNote = async (values) => {
-    const artworkId = artwork?.filter(({ key }) => {
-      return String(key) === id;
-    });
     dispatch(
-      patchArtworkAction(artworkId?.[0]?.id, {
+      patchArtworkAction(id, {
         ...values,
+        ...artworkHistory,
         status: artworkById?.status,
         submissionStatus: artworkById?.submissionStatus,
       })
@@ -77,36 +73,47 @@ const SubmissionDetails = () => {
     message.error("Submit failed!");
   };
 
-  const decrementLocationID = (event) => {
-    if (id <= 0) {
-      event.preventDefault();
-    }
+  const decrementLocationID = () => {
+    const artworkId = artwork?.filter((item) => {
+      return item.id === id;
+    });
+
+    const prevArtworkId = artwork?.filter(({ key }) => {
+      if (artworkId?.[0]?.key === 0) {
+        return key === artwork?.length - 1;
+      }
+
+      return key === artworkId?.[0]?.key - 1;
+    });
+
+    navigate(`/e2899344-0676-11ed-b939-0242ac120002/${prevArtworkId?.[0]?.id}`);
   };
 
-  const incrementLocationID = (event) => {
-    if (id >= artwork?.length) {
-      event.preventDefault();
-    }
+  const incrementLocationID = () => {
+    const artworkId = artwork?.filter((item) => {
+      return item.id === id;
+    });
+
+    const nextArtworkId = artwork?.filter(({ key }) => {
+      if (artworkId?.[0]?.key === artwork?.length - 1) {
+        return key === 0;
+      }
+
+      return key === artworkId?.[0]?.key + 1;
+    });
+
+    navigate(`/e2899344-0676-11ed-b939-0242ac120002/${nextArtworkId?.[0]?.id}`);
   };
 
   return (
     <Row className="submission-details">
-      <Link
-        to={`/e2899344-0676-11ed-b939-0242ac120002/${Number(id) - 1}`}
-        onClick={decrementLocationID}
-      >
-        <Col
-          className={
-            id === "0" ? "submission-change-diabled" : "submission-change"
-          }
-        >
-          <IoIosArrowBack size={30} className="submission-change-arrow" />
-        </Col>
-      </Link>
+      <Col className="submission-change" onClick={decrementLocationID}>
+        <IoIosArrowBack size={30} className="submission-change-arrow" />
+      </Col>
       <Row className="submission-details-card">
         <Row>
           <Text className="location">
-            <Link to="/e2899344-0676-11ed-b939-0242ac120002">Submissions</Link>{" "}
+            <Link to="/e2899344-0676-11ed-b939-0242ac120002">Submissions</Link>
             <MdKeyboardArrowRight size={14} />
             <span className="blue-text">
               Artwork ID: {artworkById ? artworkById.id : "not found"}
@@ -152,13 +159,30 @@ const SubmissionDetails = () => {
               </Text>
             </Row>
 
-            <Row className="detail">
-              <Text className="data-header">Artwork Photos</Text>
-              <img
-                className="data-image"
-                src={artworkById ? artworkById?.artworkMainPhoto : "not found"}
-                alt=""
-              />
+            <Row className="details-image-constiner">
+              <Row className="details-image">
+                <Text className="data-header">Artwork Main Photo</Text>
+                {artworkById?.artworkMainPhoto ? (
+                  <img
+                    className="data-image"
+                    src={artworkById?.artworkMainPhoto}
+                    alt="main photo"
+                  />
+                ) : (
+                  "not found"
+                )}
+              </Row>
+
+              {artworkById?.artworkInSitu && (
+                <Row className="details-image">
+                  <Text className="data-header">Artwork Photo in situ</Text>
+                  <img
+                    className="data-image"
+                    src={artworkById?.artworkInSitu}
+                    alt="main photo"
+                  />
+                </Row>
+              )}
             </Row>
 
             <Row className="detail">
@@ -262,20 +286,9 @@ const SubmissionDetails = () => {
           </Col>
         </Row>
       </Row>
-      <Link
-        to={`/e2899344-0676-11ed-b939-0242ac120002/${Number(id) + 1}`}
-        onClick={incrementLocationID}
-      >
-        <Col
-          className={
-            id === String(artwork?.length)
-              ? "submission-change-diabled"
-              : "submission-change"
-          }
-        >
-          <IoIosArrowForward size={30} className="submission-change-arrow" />
-        </Col>
-      </Link>
+      <Col className="submission-change" onClick={incrementLocationID}>
+        <IoIosArrowForward size={30} className="submission-change-arrow" />
+      </Col>
     </Row>
   );
 };
