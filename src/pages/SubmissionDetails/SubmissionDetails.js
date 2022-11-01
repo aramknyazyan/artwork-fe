@@ -45,7 +45,7 @@ const SubmissionDetails = () => {
 
   useEffect(() => {
     form.setFieldsValue({ note: artworkHistory?.note });
-  }, [artworkHistory]);
+  }, [artworkHistory, form]);
 
   useEffect(() => {
     setArtwork(artworkDataMapping(data?.items));
@@ -166,7 +166,7 @@ const SubmissionDetails = () => {
                   <img
                     className="data-image"
                     src={artworkById?.artworkMainPhoto}
-                    alt="main photo"
+                    alt="main"
                   />
                 ) : (
                   "not found"
@@ -179,7 +179,7 @@ const SubmissionDetails = () => {
                   <img
                     className="data-image"
                     src={artworkById?.artworkInSitu}
-                    alt="main photo"
+                    alt="main"
                   />
                 </Row>
               )}

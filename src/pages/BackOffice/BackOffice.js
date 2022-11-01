@@ -39,7 +39,7 @@ const BackOffice = () => {
 
   useEffect(() => {
     setSearchParams({});
-  }, []);
+  }, [setSearchParams]);
 
   const menuChangeHandler = (e) => {
     if (e.key === "") {
