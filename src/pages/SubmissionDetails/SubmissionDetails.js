@@ -15,7 +15,7 @@ import {
 } from "../../redux/action";
 
 import { Row, Col, Typography, Input, Form, message } from "antd";
-import PriceOfferHelper from "./components/PriceOfferHelper/PriceOfferHelper";
+import PriceOfferHelper from "../../shared/helpers/priceOfferHelper";
 import { artworkDataMapping } from "../../shared/mapping/backofficeDataMap";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -86,7 +86,7 @@ const SubmissionDetails = () => {
       return key === artworkId?.[0]?.key - 1;
     });
 
-    navigate(`/e2899344-0676-11ed-b939-0242ac120002/${prevArtworkId?.[0]?.id}`);
+    navigate(`/backoffice/${prevArtworkId?.[0]?.id}`);
   };
 
   const incrementLocationID = () => {
@@ -102,7 +102,7 @@ const SubmissionDetails = () => {
       return key === artworkId?.[0]?.key + 1;
     });
 
-    navigate(`/e2899344-0676-11ed-b939-0242ac120002/${nextArtworkId?.[0]?.id}`);
+    navigate(`/backoffice/${nextArtworkId?.[0]?.id}`);
   };
 
   return (
@@ -113,7 +113,7 @@ const SubmissionDetails = () => {
       <Row className="submission-details-card">
         <Row>
           <Text className="location">
-            <Link to="/e2899344-0676-11ed-b939-0242ac120002">Submissions</Link>
+            <Link to="/backoffice">Submissions</Link>
             <MdKeyboardArrowRight size={14} />
             <span className="blue-text">
               Artwork ID: {artworkById ? artworkById.id : "not found"}

@@ -12,6 +12,8 @@ import SubmissionDetails from "./pages/SubmissionDetails/SubmissionDetails";
 import About from "./pages/About/About";
 import Artists from "./pages/Artists/Artists";
 import SuccessPage from "./pages/SuccessPage/SuccessPage";
+import ContactUs from "./pages/ContactUs/ContactUs";
+import ArtWorkDetails from "./pages/ArtWorkDetails/ArtWorkDetails";
 
 import "./App.scss";
 import "antd/dist/antd.css";
@@ -26,17 +28,13 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/submit" element={<SubmitWork />} />
-                <Route
-                  path="/e2899344-0676-11ed-b939-0242ac120002"
-                  element={<BackOffice />}
-                />
-                <Route
-                  path="/e2899344-0676-11ed-b939-0242ac120002/:id"
-                  element={<SubmissionDetails />}
-                />
+                <Route path="/backoffice" element={<BackOffice />} />
+                <Route path="/backoffice/:id" element={<SubmissionDetails />} />
+                <Route path="/submission/:id" element={<ArtWorkDetails />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/artists" element={<Artists />} />
                 <Route path="/success" element={<SuccessPage />} />
+                <Route path="/contact-us" element={<ContactUs />} />
               </Routes>
             }
           />

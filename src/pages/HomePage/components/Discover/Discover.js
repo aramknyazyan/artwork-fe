@@ -12,10 +12,10 @@ const Discover = () => {
         <Text className="section-title">
           Get inspired, discover <br /> artists &amp; submit your own art
         </Text>
-        <Button className="primary-button">Explore Now</Button>
       </Col>
       <Col className="discover-image">
         <img src={ArLogoWhite} alt="ar-logo-white" className="ar-logo-white" />
+        <Button className="primary-button">Explore Now ART SY</Button>
       </Col>
     </Col>
   );

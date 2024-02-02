@@ -1,10 +1,7 @@
 import React from "react";
 
 import { useDispatch } from "react-redux";
-import {
-  patchArtworkAction,
-  getArtworkByIdAction,
-} from "../../../../redux/action";
+import { patchArtworkAction, getArtworkByIdAction } from "../../redux/action";
 
 import { Form, Button, Typography, Input, Row, message, Select } from "antd";
 

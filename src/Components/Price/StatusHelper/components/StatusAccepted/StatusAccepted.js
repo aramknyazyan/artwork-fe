@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { patchArtworkAction } from "../../../../../../../redux/action";
+import { patchArtworkAction } from "../../../../../redux/action";
 import { statusAcceptedClassNameHelper } from "./helpers/StatusAcceptedClassNameHelper";
 import {
   getArtworkHistorySelector,
   getArtworkByIdSelector,
-} from "../../../../../../../redux/selector/selector";
+} from "../../../../../redux/selector/selector";
 
 import { useParams } from "react-router-dom";
 import { Modal, Steps, Select } from "antd";

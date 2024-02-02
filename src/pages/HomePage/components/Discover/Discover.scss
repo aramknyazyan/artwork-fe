@@ -52,8 +52,11 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    .ar-logo-white {
-      margin: 140px 0px;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 116px 0;
   }
 }

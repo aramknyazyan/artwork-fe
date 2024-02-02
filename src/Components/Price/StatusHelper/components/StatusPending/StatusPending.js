@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
-import { getArtworkHistorySelector } from "../../../../../../../redux/selector/selector";
+import { getArtworkHistorySelector } from "../../../../../redux/selector/selector";
 
 import { Modal, Steps } from "antd";
 import { VscEye } from "react-icons/vsc";
