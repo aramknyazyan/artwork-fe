@@ -1,0 +1,31 @@
+@mixin artwork-price-text {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  word-spacing: 0;
+}
+
+.artwork-price-conatiner {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column !important;
+  gap: 4px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 24px;
+
+  .artwork-price-title {
+    @include artwork-price-text;
+    color: #828282;
+  }
+
+  .artwork-price {
+    @include artwork-price-text;
+    color: #333333;
+  }
+}

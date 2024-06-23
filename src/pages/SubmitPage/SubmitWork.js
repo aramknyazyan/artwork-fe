@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,6 @@ import {
   locationConstants,
   supportConstants,
   preferredMessanger,
-  creationYear,
 } from "../../shared/constants";
 
 import { Col, Form, Input, Button, Typography, Select, message } from "antd";
@@ -30,6 +29,17 @@ const SubmitWork = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const creationYear = useMemo(() => {
+    const years = [];
+    const currentYear = new Date().getFullYear();
+
+    for (let index = 0; index < 200; index++) {
+      years.push(currentYear - index);
+    }
+
+    return years;
+  }, []);
 
   const onFinish = async (values) => {
     await dispatch(
@@ -56,14 +66,9 @@ const SubmitWork = () => {
             ...((!!values?.artistInfo?.mobile?.phone ||
               !!values?.artistInfo?.mobile?.prefferedMessenger) && {
               mobile: {
-                ...(!!values?.artistInfo?.mobile?.phoneNumber && {
-                  phone: values?.artistInfo?.mobile?.phone,
-                }),
-
-                ...(!!values?.artistInfo?.mobile?.phoneNumber && {
-                  prefferedMessenger:
-                    values?.artistInfo?.mobile?.prefferedMessenger,
-                }),
+                phone: values?.artistInfo?.mobile?.phone,
+                prefferedMessenger:
+                  values?.artistInfo?.mobile?.prefferedMessenger,
               },
             }),
             nationality: values?.artistInfo?.nationality,
@@ -453,13 +458,11 @@ const SubmitWork = () => {
               ]}
             >
               <Select placeholder="Year of Creation" className="select">
-                {creationYear.map((item, index) => {
-                  return (
-                    <Option value={item} key={index}>
-                      {item}
-                    </Option>
-                  );
-                })}
+                {creationYear?.map((item, index) => (
+                  <Option value={item} key={index}>
+                    {item}
+                  </Option>
+                ))}
               </Select>
             </FormItem>
           </Col>

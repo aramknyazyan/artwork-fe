@@ -28,13 +28,15 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/submit" element={<SubmitWork />} />
-                <Route path="/backoffice" element={<BackOffice />} />
-                <Route path="/backoffice/:id" element={<SubmissionDetails />} />
-                <Route path="/submission/:id" element={<ArtWorkDetails />} />
+
                 <Route path="/about" element={<About />} />
                 <Route path="/artists" element={<Artists />} />
                 <Route path="/success" element={<SuccessPage />} />
                 <Route path="/contact-us" element={<ContactUs />} />
+
+                <Route path="/backoffice" element={<BackOffice />} />
+                <Route path="/backoffice/:id" element={<SubmissionDetails />} />
+                <Route path="/submission/:id" element={<ArtWorkDetails />} />
               </Routes>
             }
           />

@@ -1,22 +1,19 @@
 import React from "react";
-
+// ANTD components
+import { Form, Button, Typography, Input, Row, message } from "antd";
+// components
+import CurrencySelect from "../../CurrencySelect/CurrencySelect";
+// api
 import { useDispatch } from "react-redux";
-import { patchArtworkAction, getArtworkByIdAction } from "../../redux/action";
-
-import { Form, Button, Typography, Input, Row, message, Select } from "antd";
-
+import {
+  patchArtworkAction,
+  getArtworkByIdAction,
+} from "../../../redux/action";
+// styles
 import "./PriceOffer.scss";
 
 const { Text } = Typography;
 const FormItem = Form.Item;
-const Option = Select;
-
-const selectAfter = (
-  <Select defaultValue="USD" className="select-before">
-    <Option value="USD">USD</Option>
-    <Option value="EUR">EUR</Option>
-  </Select>
-);
 
 const PriceOffer = ({ id }) => {
   const dispatch = useDispatch();
@@ -26,7 +23,7 @@ const PriceOffer = ({ id }) => {
       patchArtworkAction(id, {
         ...values,
         status: "Submitted",
-        submissionStatus: "Pending",
+        submissionStatus: "Price Offer",
         priceOffer: Number(values.priceOffer),
       })
     );
@@ -64,8 +61,9 @@ const PriceOffer = ({ id }) => {
             },
           ]}
         >
-          <Input addonAfter={selectAfter} type="number" />
+          <Input addonAfter={CurrencySelect} type="number" />
         </FormItem>
+
         <Row className="send-price">
           <Button
             className="send-price-button"

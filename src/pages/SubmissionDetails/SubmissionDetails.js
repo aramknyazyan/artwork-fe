@@ -1,6 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useParams, useNavigate } from "react-router-dom";
-
+// ANTD components
+import { Row, Col, Typography, Input, Form, message } from "antd";
+import PriceOfferHelper from "../../shared/helpers/priceOfferHelper";
+// components
+import ArtworkPrice from "../../Components/ArtworkPrice/ArtworkPrice";
+import ArtworkActionButtons from "../../Components/ArtworkActionButtons/ArtworkActionButtons";
+// API
 import { useDispatch, useSelector } from "react-redux";
 import {
   getArtworkByIdSelector,
@@ -13,15 +20,13 @@ import {
   getArtworkHistoryAction,
   getArtworkAction,
 } from "../../redux/action";
-
-import { Row, Col, Typography, Input, Form, message } from "antd";
-import PriceOfferHelper from "../../shared/helpers/priceOfferHelper";
+// shared
 import { artworkDataMapping } from "../../shared/mapping/backofficeDataMap";
-
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { ARTWORK_STATUSES_ENUM } from "../../shared/constants";
+// icons
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+// styles
 import "./SubmissionDetails.scss";
-import { useState } from "react";
 
 const { Text } = Typography;
 const Textarea = Input.TextArea;
@@ -31,8 +36,8 @@ const SubmissionDetails = () => {
   const [artwork, setArtwork] = useState();
 
   const navigate = useNavigate();
-  const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const { id } = useParams();
 
   const { data } = useSelector(getArtworkListSelector);
@@ -278,11 +283,27 @@ const SubmissionDetails = () => {
                 </Row>
               </Row>
             </Form>
+
+            {artworkById?.priceOffer && (
+              <ArtworkPrice price={artworkById?.priceOffer} />
+            )}
+
             <PriceOfferHelper
               history={artworkHistory}
               id={artworkById?.id}
               status={artworkById?.submissionStatus}
+              counterOffer={artworkById?.counterOffer}
+              isAdmin={true}
             />
+
+            {!!artworkById?.submissionStatus &&
+              artworkById?.submissionStatus !== ARTWORK_STATUSES_ENUM.New && (
+                <ArtworkActionButtons
+                  status={artworkById?.submissionStatus}
+                  isAdmin={true}
+                  id={id}
+                />
+              )}
           </Col>
         </Row>
       </Row>

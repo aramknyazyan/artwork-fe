@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
 // Ant Design Components
 import { Col, Typography, Spin, Pagination } from "antd";
 // components
@@ -60,7 +59,7 @@ const Artists = () => {
 
         <Pagination
           defaultCurrent={page}
-          total={50}
+          total={data?.meta?.count || 50}
           onChange={handleChangePage}
         />
       </Col>

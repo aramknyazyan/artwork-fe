@@ -1,0 +1,31 @@
+.artwork-action-buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e3e3e3;
+
+  .button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #5e3cef;
+    cursor: pointer;
+
+    .icon {
+      margin-right: 4px;
+    }
+  }
+
+  .delete {
+    color: #ff4d4f !important;
+  }
+}

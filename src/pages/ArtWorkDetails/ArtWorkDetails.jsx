@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 // Ant Design Components
 import { Col, Typography, Input, Form, Row, message } from "antd";
 // Components
+import ArtworkActionButtons from "../../Components/ArtworkActionButtons/ArtworkActionButtons";
 import PriceOfferHelper from "../../shared/helpers/priceOfferHelper";
+import ArtworkPrice from "../../Components/ArtworkPrice/ArtworkPrice";
 // API
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -15,6 +17,8 @@ import {
   getArtworkByIdAction,
   getArtworkHistoryAction,
 } from "../../redux/action";
+// constants
+import { ARTWORK_STATUSES_ENUM } from "../../shared/constants";
 // styles
 import "./ArtWorkDetails.scss";
 
@@ -208,11 +212,27 @@ export const ArtWorkDetails = () => {
               </Row>
             </Row>
           </Form>
+
+          {artworkById?.priceOffer && (
+            <ArtworkPrice price={artworkById?.priceOffer} />
+          )}
+
           <PriceOfferHelper
             history={artworkHistory}
             id={artworkById?.id}
             status={artworkById?.submissionStatus}
+            counterOffer={artworkById?.counterOffer}
+            isAdmin={false}
           />
+
+          {!!artworkById?.submissionStatus &&
+            artworkById?.submissionStatus !== ARTWORK_STATUSES_ENUM.New && (
+              <ArtworkActionButtons
+                status={artworkById?.submissionStatus}
+                isAdmin={false}
+                id={id}
+              />
+            )}
         </Col>
       </Row>
     </Col>
