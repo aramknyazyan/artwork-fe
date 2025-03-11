@@ -2,7 +2,6 @@ import React from "react";
 import { ARTWORK_STATUSES_ENUM } from "../constants/statusSelect.constants";
 
 import StatusPending from "../../Components/ArtworkStatuses/Pending/StatusPending";
-///////////////////////////////////
 import PriceOffer from "../../Components/ArtworkStatuses/PriceOffer/PriceOffer";
 import PriceOfferCL from "../../Components/ArtworkStatuses/ClientPriceOffer/PriceOfferCL";
 import CounterPriceOffer from "../../Components/ArtworkStatuses/CounterPriceOffer/CounterPriceOffer";
@@ -20,7 +19,7 @@ const PriceOfferHelper = ({ history, id, status, isAdmin, counterOffer }) => {
           return <StatusPending />;
 
         default:
-          <StatusPending />;
+          return <StatusPending />;
       }
 
     case ARTWORK_STATUSES_ENUM.Price_Offer:
@@ -32,7 +31,7 @@ const PriceOfferHelper = ({ history, id, status, isAdmin, counterOffer }) => {
           return <PriceOfferCL id={id} />;
 
         default:
-          <StatusPending />;
+          return <StatusPending />;
       }
 
     case ARTWORK_STATUSES_ENUM.Counter_Offer:
@@ -63,7 +62,7 @@ const PriceOfferHelper = ({ history, id, status, isAdmin, counterOffer }) => {
           return <StatusNoActionCard status={status} />;
 
         default:
-          <StatusPending />;
+          return <StatusPending />;
       }
 
     case ARTWORK_STATUSES_ENUM.Rejected_Price_Offer:

@@ -21,15 +21,16 @@ const AcceptedPriceOffer = ({ status, id, counterOffer }) => {
   const dispatch = useDispatch();
 
   const selectChangeHandler = async (value) => {
-    dispatch(
+    const response = await dispatch(
       patchArtworkAction(id, {
         submissionStatus: value,
       })
     );
 
-    dispatch(getArtworkByIdAction(id));
-
-    await message.success("Status changed successfully!");
+    if (typeof response === "string") {
+      await dispatch(getArtworkByIdAction(id));
+      message.success("Status changed successfully!");
+    }
   };
 
   return (

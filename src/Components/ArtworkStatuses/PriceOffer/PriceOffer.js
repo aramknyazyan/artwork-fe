@@ -19,18 +19,23 @@ const PriceOffer = ({ id }) => {
   const dispatch = useDispatch();
 
   const onFinishPriceOffer = async (values) => {
-    dispatch(
-      patchArtworkAction(id, {
-        ...values,
-        status: "Submitted",
-        submissionStatus: "Price Offer",
-        priceOffer: Number(values.priceOffer),
-      })
-    );
+    try {
+      const response = await dispatch(
+        patchArtworkAction(id, {
+          ...values,
+          status: "Submitted",
+          submissionStatus: "Price Offer",
+          priceOffer: Number(values.priceOffer),
+        })
+      );
 
-    dispatch(getArtworkByIdAction(id));
-
-    await message.success("Submit success!");
+      if (typeof response === "string") {
+        await dispatch(getArtworkByIdAction(id));
+        message.success("Submit success!");
+      }
+    } catch (error) {
+      message.error("Failed to submit.");
+    }
   };
 
   const onFinishFailed = () => {

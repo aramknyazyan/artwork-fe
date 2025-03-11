@@ -14,27 +14,29 @@ const CounterPriceOffer = ({ counterOfferPrice, id, isAdmin }) => {
   const dispatch = useDispatch();
 
   const handleAcceptCounterPriceOffer = async () => {
-    dispatch(
+    const response = await dispatch(
       patchArtworkAction(id, {
         submissionStatus: "Accepted Counter Offer",
       })
     );
 
-    dispatch(getArtworkByIdAction(id));
-
-    await message.success("Counter Offer Accepted!");
+    if (typeof response === "string") {
+      await dispatch(getArtworkByIdAction(id));
+      message.success("Counter Offer Accepted!");
+    }
   };
 
   const handleRejectCounterPriceOffer = async () => {
-    dispatch(
+    const response = await dispatch(
       patchArtworkAction(id, {
         submissionStatus: "Rejected Counter Offer",
       })
     );
 
-    dispatch(getArtworkByIdAction(id));
-
-    await message.success("Counter Offer Rejected!");
+    if (typeof response === "string") {
+      dispatch(getArtworkByIdAction(id));
+      message.success("Counter Offer Rejected!");
+    }
   };
 
   return (

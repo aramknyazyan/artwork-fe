@@ -8,7 +8,7 @@ export const postArtworkAction = (data, callback) => async (dispatch) => {
 
     dispatch({
       type: postArtworkEnum.POST_ARTWORK_SUCCESS,
-      payloda: response,
+      payload: response,
     });
     callback({ type: "success" });
   } catch (error) {

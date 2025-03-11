@@ -19,41 +19,56 @@ const PriceOfferCL = ({ id }) => {
   const dispatch = useDispatch();
 
   const onFinishPriceOffer = async (values) => {
-    dispatch(
-      patchArtworkAction(id, {
-        status: "Submitted",
-        submissionStatus: "Counter Offer",
-        counterOffer: Number(values.counterPriceOffer),
-      })
-    );
+    try {
+      const response = await dispatch(
+        patchArtworkAction(id, {
+          status: "Submitted",
+          submissionStatus: "Counter Offer",
+          counterOffer: Number(values.counterPriceOffer),
+        })
+      );
 
-    dispatch(getArtworkByIdAction(id));
-
-    await message.success("Submit success!");
+      if (typeof response === "string") {
+        await dispatch(getArtworkByIdAction(id));
+        message.success("Submit success!");
+      }
+    } catch (error) {
+      message.error("Failed to submit.");
+    }
   };
 
   const handleAcceptPriceOffer = async () => {
-    dispatch(
-      patchArtworkAction(id, {
-        submissionStatus: "Accepted Price Offer",
-      })
-    );
+    try {
+      const response = await dispatch(
+        patchArtworkAction(id, {
+          submissionStatus: "Accepted Price Offer",
+        })
+      );
 
-    dispatch(getArtworkByIdAction(id));
-
-    await message.success("Price Offer Accepted!");
+      if (typeof response === "string") {
+        await dispatch(getArtworkByIdAction(id));
+        message.success("Price Offer Accepted!");
+      }
+    } catch (error) {
+      message.error("Failed to submit.");
+    }
   };
 
   const handleRejectPriceOffer = async () => {
-    dispatch(
-      patchArtworkAction(id, {
-        submissionStatus: "Rejected Price Offer",
-      })
-    );
+    try {
+      const response = await dispatch(
+        patchArtworkAction(id, {
+          submissionStatus: "Rejected Price Offer",
+        })
+      );
 
-    dispatch(getArtworkByIdAction(id));
-
-    await message.success("Price Offer Rejected!");
+      if (typeof response === "string") {
+        await dispatch(getArtworkByIdAction(id));
+        message.success("Price Offer Rejected!");
+      }
+    } catch (error) {
+      message.error("Failed to submit.");
+    }
   };
 
   const onFinishFailed = () => {

@@ -8,7 +8,7 @@ export const putSignedURLAction = (url, data, type) => async (dispatch) => {
 
     dispatch({
       type: putSignedURLEnum.PUT_SIGNED_URL_SUCCESS,
-      payloda: response,
+      payload: response,
     });
   } catch (error) {
     dispatch({
