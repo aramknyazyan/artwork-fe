@@ -41,7 +41,7 @@ const Header = () => {
 
             <Link
               className={pathname ? "pages-black" : "pages"}
-              to="/backoffice"
+              to="/contact-us"
             >
               Contact Us
             </Link>

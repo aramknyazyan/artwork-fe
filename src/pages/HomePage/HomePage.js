@@ -11,7 +11,8 @@ const HomePage = () => {
   return (
     <Col className="home-page">
       <SellArWork />
-      <Discover />
+      <Discover /
+      >
       <Artsper />
     </Col>
   );

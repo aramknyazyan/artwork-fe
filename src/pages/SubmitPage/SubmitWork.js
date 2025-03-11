@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -8,24 +8,12 @@ import {
   locationConstants,
   supportConstants,
   preferredMessanger,
-  creationYear,
 } from "../../shared/constants";
 
-import {
-  Col,
-  Form,
-  Input,
-  Button,
-  Typography,
-  Radio,
-  Tooltip,
-  Select,
-  message,
-} from "antd";
+import { Col, Form, Input, Button, Typography, Select, message } from "antd";
 
 import Photos from "./components/Photos";
 
-import { FiInfo } from "react-icons/fi";
 import "./SubmitWork.scss";
 
 const { Text } = Typography;
@@ -34,8 +22,6 @@ const FormItem = Form.Item;
 const { TextArea, Group } = Input;
 
 const SubmitWork = () => {
-  const [value, setValue] = useState(1);
-  const [required, setRequired] = useState(true);
   const [images, setImages] = useState({
     artworkMainPhoto: { name: "", url: "", image: null },
     artworkInSitu: { name: "", url: "", image: null },
@@ -43,6 +29,17 @@ const SubmitWork = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const creationYear = useMemo(() => {
+    const years = [];
+    const currentYear = new Date().getFullYear();
+
+    for (let index = 0; index < 200; index++) {
+      years.push(currentYear - index);
+    }
+
+    return years;
+  }, []);
 
   const onFinish = async (values) => {
     await dispatch(
@@ -65,6 +62,20 @@ const SubmitWork = () => {
       postArtworkAction(
         {
           ...values,
+          artistInfo: {
+            ...((!!values?.artistInfo?.mobile?.phone ||
+              !!values?.artistInfo?.mobile?.prefferedMessenger) && {
+              mobile: {
+                phone: values?.artistInfo?.mobile?.phone,
+                prefferedMessenger:
+                  values?.artistInfo?.mobile?.prefferedMessenger,
+              },
+            }),
+            nationality: values?.artistInfo?.nationality,
+            firstName: values?.artistInfo?.firstName,
+            lastName: values?.artistInfo?.lastName,
+            email: values?.artistInfo?.email,
+          },
           presentedChannels: Object.values(values.presentedChannels),
           width: Number(values.width),
           depth: Number(values.depth),
@@ -88,11 +99,6 @@ const SubmitWork = () => {
 
   const onFinishFailed = () => {
     message.error("Submit failed!");
-  };
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-    setRequired((prev) => !prev);
   };
 
   return (
@@ -166,52 +172,44 @@ const SubmitWork = () => {
           <Col className="form-items">
             <Col className="form-item-input-col-big">
               <Text className="input-title">
-                Preferred Communication Method{" "}
-                <span className="red-asterisk">*</span>
+                Preferred Communication Method
               </Text>
-              <Radio.Group onChange={onChange} value={value}>
-                <Radio value={1}>
-                  Mobile Number
-                  <Tooltip title="This is for Whatsup or similar apps to contact with you.">
-                    <FiInfo size={16} className="tooltip-icon" />
-                  </Tooltip>
-                </Radio>
-                <Radio value={2}>Email Address</Radio>
-              </Radio.Group>
 
-              <Col className={required ? "display" : "none"}>
+              <Col className="display">
+                <Col className="form-items">
+                  <Col className="form-item-input-col-big">
+                    <Text className="input-title">
+                      Email Address <span className="red-asterisk"> *</span>
+                    </Text>
+                    <FormItem
+                      name={["artistInfo", "email"]}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your email address!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Email Address" />
+                    </FormItem>
+                  </Col>
+                </Col>
+              </Col>
+
+              <Col className="display">
                 <Group className="group-inputs">
                   <Col className="form-items">
                     <Col className="form-item-input-col-small">
-                      <Text className="input-title">
-                        Moblie Number <span className="red-asterisk">*</span>
-                      </Text>
-                      <FormItem
-                        name={["artistInfo", "mobile", "phone"]}
-                        rules={[
-                          {
-                            required: required,
-                            message: "Please input your mobile number!",
-                          },
-                        ]}
-                      >
+                      <Text className="input-title">Moblie Number</Text>
+                      <FormItem name={["artistInfo", "mobile", "phone"]}>
                         <Input placeholder="Mobile Number" />
                       </FormItem>
                     </Col>
 
                     <Col className="form-item-input-col-small">
-                      <Text className="input-title">
-                        Preferred Messanger
-                        <span className="red-asterisk"> *</span>
-                      </Text>
+                      <Text className="input-title">Preferred Messanger</Text>
                       <FormItem
                         name={["artistInfo", "mobile", "prefferedMessenger"]}
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please select nationality!",
-                          },
-                        ]}
                       >
                         <Select
                           placeholder="Preferred Messanger"
@@ -229,27 +227,6 @@ const SubmitWork = () => {
                     </Col>
                   </Col>
                 </Group>
-              </Col>
-
-              <Col className={required ? "none" : "display"}>
-                <Col className="form-items">
-                  <Col className="form-item-input-col-big">
-                    <Text className="input-title">
-                      Email Address <span className="red-asterisk"> *</span>
-                    </Text>
-                    <FormItem
-                      name={["artistInfo", "email"]}
-                      rules={[
-                        {
-                          required: !required,
-                          message: "Please input your email address!",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Email Address" />
-                    </FormItem>
-                  </Col>
-                </Col>
               </Col>
             </Col>
           </Col>
@@ -481,13 +458,11 @@ const SubmitWork = () => {
               ]}
             >
               <Select placeholder="Year of Creation" className="select">
-                {creationYear.map((item, index) => {
-                  return (
-                    <Option value={item} key={index}>
-                      {item}
-                    </Option>
-                  );
-                })}
+                {creationYear?.map((item, index) => (
+                  <Option value={item} key={index}>
+                    {item}
+                  </Option>
+                ))}
               </Select>
             </FormItem>
           </Col>

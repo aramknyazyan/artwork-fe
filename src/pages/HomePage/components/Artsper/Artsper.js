@@ -15,7 +15,7 @@ const Artsper = () => {
         <Text className="section-title">
           Submit your artworks along the other famous artists
         </Text>
-        <Button className="primary-button">Explore Now</Button>
+        <Button className="primary-button">Explore Now Artsper</Button>
       </Col>
     </Col>
   );

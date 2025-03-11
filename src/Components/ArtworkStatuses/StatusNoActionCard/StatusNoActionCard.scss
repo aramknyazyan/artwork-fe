@@ -1,0 +1,76 @@
+@mixin status-card {
+  width: 100%;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-action-status-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column !important;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 24px;
+
+  .no-action-status-title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+  }
+
+  .Accepted_Price_Offer {
+    @include status-card;
+    background-color: #52c41a;
+    border-color: #52c41a;
+  }
+
+  .Published {
+    @include status-card;
+    background-color: #13c2c2;
+    border-color: #13c2c2;
+  }
+
+  .Sold {
+    @include status-card;
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+
+  .Shipped {
+    @include status-card;
+    background-color: #eb2f96;
+    border-color: #eb2f96;
+  }
+
+  .Rejected_Price_Offer {
+    @include status-card;
+    background-color: #fff1f0;
+    border: 1px solid #ffa39e;
+    color: #f5222d;
+  }
+
+  .Accepted_Counter_Offer {
+    @include status-card;
+    background-color: #8bbe0b;
+    border-color: #8bbe0b;
+  }
+
+  .Rejected_Counter_Offer {
+    @include status-card;
+    background-color: #fff1f0;
+    border: 1px solid #ffa39e;
+    color: #f5222d;
+  }
+}

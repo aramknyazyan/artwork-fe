@@ -8,8 +8,10 @@ export const patchArtworkAction = (id, data) => async (dispatch) => {
 
     dispatch({
       type: patchArtworkEnum.PATCH_ARTWORK_SUCCESS,
-      payloda: response,
+      payload: response,
     });
+
+    return response;
   } catch (error) {
     dispatch({
       type: patchArtworkEnum.PATCH_ARTWORK_ERROR,

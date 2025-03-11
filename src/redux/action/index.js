@@ -5,3 +5,5 @@ export * from "./putSignedURL";
 export * from "./getArtworkById";
 export * from "./patchArtwork";
 export * from "./getArtworkHistory";
+export * from "./contactUs";
+export * from "./getArtists";

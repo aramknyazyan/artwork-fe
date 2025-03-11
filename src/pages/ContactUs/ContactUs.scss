@@ -1,0 +1,122 @@
+@use "../../App.scss" as v;
+
+@font-face {
+  font-family: Inter;
+  src: url(../../Assets/Fonts/Inter/InterRegular.ttf);
+}
+
+@font-face {
+  font-family: freightDispPro;
+  src: url(../../Assets/Fonts/FreightDispPro/FreightDispPro.otf);
+}
+
+.contact-us-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid black;
+  margin-top: 83px;
+  padding: 40px 20px;
+
+  .contact-us-title {
+    font-size: 30px;
+    color: v.$blackColor;
+    font-weight: normal;
+    letter-spacing: 0.02rem;
+    font-family: freightDispPro;
+  }
+
+  .contact-us-form {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 40px;
+
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      border-radius: 8px;
+      height: 38px;
+    }
+
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .input-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .input-title {
+      font-size: 14px;
+      font-weight: 600;
+      font-family: Inter;
+      color: #333333;
+
+      .red-asterisk {
+        color: red;
+      }
+    }
+
+    .ant-input {
+      width: 100%;
+      height: 38px;
+      border-radius: 8px;
+    }
+
+    .ant-col-16 {
+      max-width: 100%;
+    }
+
+    .ant-form-item {
+      width: 100%;
+    }
+
+    .text-area {
+      width: 100%;
+      min-height: 140px;
+      textarea.ant-input {
+        min-height: 140px;
+        text-align: start;
+      }
+    }
+
+    .ant-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #5e3cef;
+      border: none;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .contact-us-container {
+    .contact-us-form {
+      .container {
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: center;
+        gap: 0px;
+      }
+
+      .ant-col-16 {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  }
+}

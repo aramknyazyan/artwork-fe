@@ -1,0 +1,104 @@
+@mixin artwork-counter-price-texts {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  word-spacing: 0;
+}
+
+.counter-price-offer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column !important;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 24px;
+
+  .counter-price-offer-title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+  }
+
+  .counter-price-offer-status {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 10px;
+    width: 100%;
+    height: 38px;
+    background: #fffaf0;
+    border: 1px solid #ffdb7f;
+    border-radius: 6px;
+    color: #ffb700;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 8px;
+  }
+
+  .counter-price-offer {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column !important;
+    gap: 4px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 24px;
+
+    .counter-price-offer-title {
+      @include artwork-counter-price-texts;
+      color: #828282;
+    }
+
+    .counter-price {
+      @include artwork-counter-price-texts;
+      color: #333333;
+    }
+  }
+
+  .counter-price-buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    margin-top: 24px;
+
+    button {
+      font-weight: 600;
+      border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      line-height: 18px;
+      box-shadow: none;
+    }
+
+    .reject-counter-price-offer-button {
+      padding: 9px 20px;
+      background-color: transparent;
+      border-color: transparent;
+      color: #333333;
+    }
+
+    .accept-counter-price-offer-button {
+      padding: 9px 20px;
+      background-color: #333333;
+      border-color: #333333;
+      color: white;
+    }
+  }
+}

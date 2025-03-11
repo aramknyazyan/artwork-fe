@@ -1,0 +1,104 @@
+.counter-offer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  .submit-counter-Offer {
+    width: 100%;
+
+    .counter-Offer-detail {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-top: 20px;
+
+      .data-header {
+        font-size: 14px;
+        color: #828282;
+
+        .dark {
+          color: black;
+          font-weight: 600;
+        }
+      }
+
+      .ant-form-item {
+        width: 100%;
+        margin-bottom: 0;
+
+        .ant-col-16 {
+          max-width: 100%;
+        }
+      }
+
+      .send-counter-price {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 20px 0;
+
+        .send-counter-price-button {
+          width: 100%;
+          padding: 9px 20px 11px 20px;
+          background-color: #fffaf0;
+          border-color: #ffdb7f;
+          color: #ffdb7f;
+          font-weight: 600;
+          font-size: 16px;
+          border-radius: 6px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .ant-input {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+        height: 40px;
+      }
+
+      .ant-input-group-addon {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+    }
+  }
+
+  .counter-offer-action-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button {
+      font-weight: 600;
+      border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      line-height: 18px;
+      box-shadow: none;
+    }
+
+    .reject-price-offer-button {
+      padding: 9px 20px;
+      background-color: transparent;
+      border-color: transparent;
+      color: #333333;
+    }
+
+    .accept-price-offer-button {
+      padding: 9px 20px;
+      background-color: #333333;
+      border-color: #333333;
+      color: white;
+    }
+  }
+}

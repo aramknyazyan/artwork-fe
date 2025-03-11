@@ -1,0 +1,77 @@
+.history-modal {
+  width: 628px;
+  .ant-modal-content {
+    border-radius: 16px;
+  }
+
+  .modal-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #30333d;
+    margin-bottom: 36px;
+  }
+
+  .modal-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 12px;
+      gap: 10px;
+      width: 100px;
+      height: 36px;
+      background: #5e3cef;
+      border-radius: 4px;
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      color: #ffffff;
+      margin-top: 36px;
+      cursor: pointer;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 36px;
+  }
+  .content {
+    .ant-steps-vertical {
+      .ant-steps-item {
+        .ant-steps-item-container {
+          display: flex;
+          align-items: center;
+          padding-bottom: 15px;
+
+          .ant-steps-vertical .ant-steps-dot {
+            .ant-steps-item-icon {
+              margin-top: 10px !important;
+            }
+          }
+
+          .ant-steps-item-content {
+            min-height: auto;
+          }
+        }
+      }
+    }
+  }
+}

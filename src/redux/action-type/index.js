@@ -5,3 +5,5 @@ export * from "./putSignedURLActionType";
 export * from "./getArtworkByIdActionType";
 export * from "./patchArtworkActionType";
 export * from "./getArtworkHistoryActionType";
+export * from "./contactUsActionType";
+export * from "./getArtistsActionType";

@@ -5,3 +5,5 @@ export * from "./putSignedURLReducer";
 export * from "./getArtworkByIdReducer";
 export * from "./patchArtworkReducer";
 export * from "./getArtworkHistoryReducer";
+export * from "./contactUsReducer";
+export * from "./getArtistsReducer";

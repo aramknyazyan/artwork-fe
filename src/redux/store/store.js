@@ -8,6 +8,8 @@ import {
   putSignedURLReducer,
   artworkByIdReducer,
   artworkHistoryReducer,
+  contactUsReducer,
+  getArtistsReducer,
 } from "../reducer";
 
 const rootReducer = combineReducers({
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   putSignedURL: putSignedURLReducer,
   artworkById: artworkByIdReducer,
   artworkHistory: artworkHistoryReducer,
+  contactUs: contactUsReducer,
+  getArtists: getArtistsReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

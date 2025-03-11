@@ -1,14 +1,37 @@
-import React from "react";
-import { Col, Typography } from "antd";
+import React, { useEffect, useState, useCallback } from "react";
+// Ant Design Components
+import { Col, Typography, Spin, Pagination } from "antd";
+// components
+import ArtistCard from "./Components/ArtistCard";
+// API
+import { getArtistsAction } from "../../redux/action";
+import { useDispatch, useSelector } from "react-redux";
+import { getArtistsSelector } from "../../redux/selector/selector";
+// style
+import "./Artists.scss";
 
 import artistOne from "../../Assets/Images/image.png";
-import artistTwo from "../../Assets/Images/image-two.png";
-import artistThree from "../../Assets/Images/image-three.png";
-import "./Artists.scss";
-import ArtistCard from "./Components/ArtistCard";
 
 const Artists = () => {
+  const [page, setPage] = useState(1);
+
+  const dispatch = useDispatch();
   const { Text } = Typography;
+
+  const { data, loading } = useSelector(getArtistsSelector);
+
+  useEffect(() => {
+    dispatch(getArtistsAction(page));
+  }, [dispatch, page]);
+
+  const handleChangePage = useCallback((e) => {
+    setPage(e);
+  }, []);
+
+  if (loading) {
+    return <Spin size="large" />;
+  }
+
   return (
     <Col className="artists-page">
       <Col className="artists-page-card">
@@ -19,49 +42,26 @@ const Artists = () => {
           <ArtistCard
             imageSrc={artistOne}
             alt="artist-image"
-            artistName="Al Chen"
+            firstName="Al"
+            lastName="Chen"
           />
-          <ArtistCard
-            imageSrc={artistTwo}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
-          <ArtistCard
-            imageSrc={artistThree}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
-          <ArtistCard
-            imageSrc={artistOne}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
-          <ArtistCard
-            imageSrc={artistTwo}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
-          <ArtistCard
-            imageSrc={artistThree}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
-          <ArtistCard
-            imageSrc={artistOne}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
-          <ArtistCard
-            imageSrc={artistTwo}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
-          <ArtistCard
-            imageSrc={artistThree}
-            alt="artist-image"
-            artistName="Al Chen"
-          />
+
+          {!!data?.items?.length &&
+            data?.items?.map(({ photo, firstName, lastName }) => (
+              <ArtistCard
+                imageSrc={photo}
+                alt="artist-image"
+                firstName={firstName}
+                lastName={lastName}
+              />
+            ))}
         </Col>
+
+        <Pagination
+          defaultCurrent={page}
+          total={data?.meta?.count || 50}
+          onChange={handleChangePage}
+        />
       </Col>
     </Col>
   );

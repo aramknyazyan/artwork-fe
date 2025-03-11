@@ -51,7 +51,7 @@ const ActionButtons = ({ id, submissionStatus }) => {
 
   return (
     <div>
-      <Link to={`/e2899344-0676-11ed-b939-0242ac120002/${id}`}>
+      <Link to={`/backoffice/${id}`}>
         <VscEye id={id} color="#5E3CEF" size={24} className="actions-icon" />
       </Link>
       <AiOutlineDelete

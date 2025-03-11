@@ -14,14 +14,14 @@ const SellArWork = () => {
         other famous artists
       </Col>
       <Col className="buttons">
-        <Col>
+        <Col className="button">
           <Link to="/Submit">
             <Text type="button" className="submit-work-button">
               Submit Artwork
             </Text>
           </Link>
         </Col>
-        <Col>
+        <Col className="button">
           <Text className="free-valuation">Get free valuation</Text>
           <Link to="/Submit" />
         </Col>
