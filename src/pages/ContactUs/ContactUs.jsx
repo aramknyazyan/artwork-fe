@@ -15,9 +15,17 @@ const { Text } = Typography;
 
 const ContactUs = () => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    await dispatch(contactUsAction(values));
+    try {
+      const response = await dispatch(contactUsAction(values));
+
+      message.success("Message sent successfully!");
+      form.resetFields();
+    } catch (error) {
+      message.error("Something went wrong!");
+    }
   };
 
   const onFinishFailed = () => {
@@ -28,6 +36,7 @@ const ContactUs = () => {
     <Col className="contact-us-container">
       <Typography className="contact-us-title">Contact Us</Typography>
       <Form
+        form={form}
         name="contact-us"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
@@ -35,17 +44,13 @@ const ContactUs = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        className="contact-us-form"
-      >
+        className="contact-us-form">
         <Col className="container">
           <Col className="input-container">
             <Text className="input-title">
               First Name <span className="red-asterisk">*</span>
             </Text>
-            <FormItem
-              name="firstName"
-              rules={[CONTACT_US_FORM_VALIDATION?.firstName]}
-            >
+            <FormItem name="firstName" rules={[CONTACT_US_FORM_VALIDATION?.firstName]}>
               <Input placeholder="First Name" />
             </FormItem>
           </Col>
@@ -54,10 +59,7 @@ const ContactUs = () => {
             <Text className="input-title">
               Last Name <span className="red-asterisk">*</span>
             </Text>
-            <FormItem
-              name="lastName"
-              rules={[CONTACT_US_FORM_VALIDATION?.lastName]}
-            >
+            <FormItem name="lastName" rules={[CONTACT_US_FORM_VALIDATION?.lastName]}>
               <Input placeholder="Last Name" />
             </FormItem>
           </Col>
@@ -78,16 +80,8 @@ const ContactUs = () => {
           </Text>
           <Col className="input-container">
             <Group>
-              <FormItem
-                name="message"
-                className="text-area"
-                rules={[CONTACT_US_FORM_VALIDATION?.message]}
-              >
-                <TextArea
-                  maxLength={300}
-                  placeholder="Artwork Title"
-                  className="text-area"
-                />
+              <FormItem name="message" className="text-area" rules={[CONTACT_US_FORM_VALIDATION?.message]}>
+                <TextArea maxLength={300} placeholder="Artwork Title" className="text-area" />
               </FormItem>
             </Group>
           </Col>
