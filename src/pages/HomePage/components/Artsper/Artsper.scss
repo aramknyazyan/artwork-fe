@@ -37,10 +37,7 @@
       font-size: 16px;
       line-height: 19px;
       transition: 300ms;
-    }
-    .primary-button:hover {
-      background-color: v.$primaryColor;
-      color: v.$whiteColor;
+      pointer-events: none;
     }
   }
 
