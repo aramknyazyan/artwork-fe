@@ -42,6 +42,8 @@ const SubmitWork = () => {
   }, []);
 
   const onFinish = async (values) => {
+    console.log("values --- ", values);
+
     await dispatch(
       putSignedURLAction(
         images.artworkMainPhoto?.url,
@@ -71,7 +73,7 @@ const SubmitWork = () => {
                   values?.artistInfo?.mobile?.prefferedMessenger,
               },
             }),
-            nationality: values?.artistInfo?.nationality,
+            nationality: values?.artistInfo?.nationality.join(" "),
             firstName: values?.artistInfo?.firstName,
             lastName: values?.artistInfo?.lastName,
             email: values?.artistInfo?.email,
@@ -85,6 +87,9 @@ const SubmitWork = () => {
           artworkInSitu: images.artworkInSitu.name,
           submissionStatus: "New",
           status: "Submitted",
+          material: values.material.join(" "),
+          currentLocation: values.currentLocation.join(" "),
+          support: values.support.join(" "),
         },
         (status) => {
           if (status.type === "success") {
@@ -156,7 +161,11 @@ const SubmitWork = () => {
                   { required: true, message: "Please select nationality!" },
                 ]}
               >
-                <Select placeholder="Nationality" className="select">
+                <Select
+                  placeholder="Nationality"
+                  className="select"
+                  mode="tags"
+                >
                   {locationConstants.map((item, index) => {
                     return (
                       <Option value={item} key={index}>
@@ -283,7 +292,7 @@ const SubmitWork = () => {
               name="material"
               rules={[{ required: true, message: "Please select material!" }]}
             >
-              <Select placeholder="Material" className="select">
+              <Select placeholder="Material" className="select" mode="tags">
                 {materialConstants.map((item, index) => {
                   return (
                     <Option value={item} key={index}>
@@ -303,7 +312,7 @@ const SubmitWork = () => {
               name="support"
               rules={[{ required: true, message: "Please select support!" }]}
             >
-              <Select placeholder="Support" className="select">
+              <Select placeholder="Support" className="select" mode="tags">
                 {supportConstants.map((item, index) => {
                   return (
                     <Option value={item} key={index}>
@@ -435,7 +444,7 @@ const SubmitWork = () => {
               name="currentLocation"
               rules={[{ required: true, message: "Please select country!" }]}
             >
-              <Select placeholder="Location" className="select">
+              <Select placeholder="Location" className="select" mode="tags">
                 {locationConstants.map((item, index) => {
                   return (
                     <Option value={item} key={index}>

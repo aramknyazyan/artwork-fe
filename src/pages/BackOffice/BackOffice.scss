@@ -78,6 +78,10 @@
     .tableANTD {
       width: 100%;
 
+      .ant-table-row {
+        cursor: pointer !important;
+      }
+
       .mainPhoto {
         width: 121px;
         height: 91px;

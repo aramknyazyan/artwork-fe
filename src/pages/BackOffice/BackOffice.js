@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getArtworkAction } from "../../redux/action";
@@ -25,6 +25,7 @@ const BackOffice = () => {
   const [current, setCurrent] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data, loading } = useSelector(getArtworkListSelector);
 
@@ -135,6 +136,11 @@ const BackOffice = () => {
             pageSizeOptions: ["10", "20", "30"],
           }}
           className="tableANTD"
+          onRow={(record) => ({
+            onClick: () => {
+              navigate(`/backoffice/${record.id}`);
+            },
+          })}
         />
       </Row>
     </Row>
