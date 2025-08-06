@@ -23,7 +23,7 @@ export const columns = [
     width: "18%",
   },
   {
-    title: "Country",
+    title: "Nationality",
     dataIndex: "country",
     sorter: (a, b) => a.country.localeCompare(b.country),
     width: "18%",
