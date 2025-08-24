@@ -3,10 +3,7 @@ import React from "react";
 import { Button, Row, message } from "antd";
 // API
 import { useDispatch } from "react-redux";
-import {
-  patchArtworkAction,
-  getArtworkByIdAction,
-} from "../../../redux/action";
+import { patchArtworkAction, getArtworkByIdAction, getArtworkHistoryAction } from "../../../redux/action";
 // styles
 import "./CounterPriceOffer.scss";
 
@@ -22,6 +19,7 @@ const CounterPriceOffer = ({ counterOfferPrice, id, isAdmin }) => {
 
     if (typeof response === "string") {
       await dispatch(getArtworkByIdAction(id));
+      await dispatch(getArtworkHistoryAction(id));
       message.success("Counter Offer Accepted!");
     }
   };
@@ -35,6 +33,7 @@ const CounterPriceOffer = ({ counterOfferPrice, id, isAdmin }) => {
 
     if (typeof response === "string") {
       dispatch(getArtworkByIdAction(id));
+      dispatch(getArtworkHistoryAction(id));
       message.success("Counter Offer Rejected!");
     }
   };
@@ -49,21 +48,15 @@ const CounterPriceOffer = ({ counterOfferPrice, id, isAdmin }) => {
         <Row className="counter-price">${counterOfferPrice}</Row>
       </Row>
 
+      {!isAdmin && <Row className="pending-status">Pending</Row>}
+
       {isAdmin && (
         <Row className="counter-price-buttons-container">
-          <Button
-            className="reject-counter-price-offer-button"
-            onClick={handleRejectCounterPriceOffer}
-            type="primary"
-          >
+          <Button className="reject-counter-price-offer-button" onClick={handleRejectCounterPriceOffer} type="primary">
             Reject
           </Button>
 
-          <Button
-            className="accept-counter-price-offer-button"
-            onClick={handleAcceptCounterPriceOffer}
-            type="primary"
-          >
+          <Button className="accept-counter-price-offer-button" onClick={handleAcceptCounterPriceOffer} type="primary">
             Accept
           </Button>
         </Row>

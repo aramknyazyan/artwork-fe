@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import ActionButtons from "../../pages/BackOffice/components/actionButtons";
-
 import { backofficeSatatusMap } from "../../shared/mapping/backofficeStatusMap";
 
 export const columns = [
@@ -7,14 +7,22 @@ export const columns = [
     title: "Photo",
     dataIndex: "photo",
     width: "14%",
-    render: (text) => <img src={text} alt="img" className="mainPhoto" />,
+    render: (text, record) => (
+      <Link to={`/backoffice/${record.id}`}>
+        <img src={text} alt="img" className="mainPhoto" />
+      </Link>
+    ),
   },
   {
     title: "Status",
     dataIndex: "status",
     sorter: (a, b) => a.status.localeCompare(b.status),
     width: "16%",
-    render: (text) => <p className={backofficeSatatusMap[text]}>{text}</p>,
+    render: (text, record) => (
+      <Link to={`/backoffice/${record.id}`}>
+        <p className={backofficeSatatusMap[text]}>{text}</p>
+      </Link>
+    ),
   },
   {
     title: "Artist Name",
@@ -39,7 +47,7 @@ export const columns = [
     dataIndex: "actions",
     width: "16%",
     render: (_, record) => {
-      return <ActionButtons id={record.id} submissionStatus={record.status} />;
+      return <ActionButtons id={record.id} submissionStatus={record.submissionStatus} />;
     },
   },
 ];

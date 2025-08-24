@@ -98,7 +98,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
       }
       .reviewed {
         padding: 5px;
@@ -111,7 +110,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
       }
       .new {
         padding: 5px;
@@ -124,7 +122,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
       }
       .pending {
         padding: 5px;
@@ -137,7 +134,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
       }
       .rejected-price-offer {
         padding: 5px;
@@ -150,7 +146,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
+      }
+      .archived {
+        padding: 5px;
+        border: 1px solid #ffbb96;
+        border-radius: 4px;
+        background-color: #fff2e8;
+        color: #fa541c;
+        font-weight: 600;
+        padding: 5px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .accepted-counter-offer {
         padding: 5px;
@@ -163,7 +170,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
       }
       .rejected-counter-offer {
         padding: 5px;
@@ -176,7 +182,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
       }
       .accepted-price-offer {
         padding: 5px;
@@ -189,7 +194,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        display: inherit;
       }
     }
 

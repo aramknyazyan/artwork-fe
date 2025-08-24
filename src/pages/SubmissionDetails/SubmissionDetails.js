@@ -9,17 +9,8 @@ import ArtworkPrice from "../../Components/ArtworkPrice/ArtworkPrice";
 import ArtworkActionButtons from "../../Components/ArtworkActionButtons/ArtworkActionButtons";
 // API
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getArtworkByIdSelector,
-  getArtworkHistorySelector,
-  getArtworkListSelector,
-} from "../../redux/selector/selector";
-import {
-  getArtworkByIdAction,
-  patchArtworkAction,
-  getArtworkHistoryAction,
-  getArtworkAction,
-} from "../../redux/action";
+import { getArtworkByIdSelector, getArtworkHistorySelector, getArtworkListSelector } from "../../redux/selector/selector";
+import { getArtworkByIdAction, patchArtworkAction, getArtworkHistoryAction, getArtworkAction } from "../../redux/action";
 // shared
 import { artworkDataMapping } from "../../shared/mapping/backofficeDataMap";
 import { ARTWORK_STATUSES_ENUM } from "../../shared/constants";
@@ -43,6 +34,22 @@ const SubmissionDetails = () => {
   const { data } = useSelector(getArtworkListSelector);
   const artworkById = useSelector(getArtworkByIdSelector);
   const artworkHistory = useSelector(getArtworkHistorySelector);
+
+  // useEffect(() => {
+  //   if (!!artworkById) {
+  //     const isNewArtwork = artworkById.submissionStatus === ARTWORK_STATUSES_ENUM.New;
+  //     const isSameArtwork = id === artworkById.id;
+
+  //     if (isNewArtwork && isSameArtwork) {
+  //       console.log("is NEW artwork --- ", artworkById);
+  //       dispatch(
+  //         patchArtworkAction(id, {
+  //           submissionStatus: ARTWORK_STATUSES_ENUM.Reviewed,
+  //         })
+  //       );
+  //     }
+  //   }
+  // }, [artworkById, id]);
 
   useEffect(() => {
     dispatch(getArtworkAction());
@@ -120,9 +127,7 @@ const SubmissionDetails = () => {
           <Text className="location">
             <Link to="/backoffice">Submissions</Link>
             <MdKeyboardArrowRight size={14} />
-            <span className="blue-text">
-              Artwork ID: {artworkById ? artworkById.id : "not found"}
-            </span>
+            <span className="blue-text">Artwork ID: {artworkById ? artworkById.id : "not found"}</span>
           </Text>
         </Row>
         <Row className="submission-content">
@@ -130,119 +135,84 @@ const SubmissionDetails = () => {
             <Text className="content-header">Submission Details</Text>
             <Row className="detail">
               <Text className="data-header">Artwork submission date</Text>
-              <Text className="data">
-                {artworkById ? artworkById.createdDate : "not found"}
-              </Text>
+              <Text className="data">{artworkById ? artworkById.createdDate : "not found"}</Text>
             </Row>
 
             <Row className="detail">
               <Text className="data-header">Artist Name</Text>
               <Text className="data">
-                {artworkById ? artworkById.artistInfo?.firstName : "not found"}{" "}
-                {artworkById ? artworkById.artistInfo?.lastName : "not found"}
+                {artworkById ? artworkById.artistInfo?.firstName : "not found"} {artworkById ? artworkById.artistInfo?.lastName : "not found"}
               </Text>
             </Row>
 
             <Row className="detail">
               <Text className="data-header">Artist Nationality</Text>
-              <Text className="data">
-                {artworkById
-                  ? artworkById.artistInfo?.nationality
-                  : "not found"}
-              </Text>
+              <Text className="data">{artworkById ? artworkById.artistInfo?.nationality : "not found"}</Text>
             </Row>
 
             <Row className="detail">
-              <Text className="data-header">
-                Preffered Communication Method
-              </Text>
+              <Text className="data-header">Preffered Communication Method</Text>
               <Text className="data">
-                {artworkById
-                  ? artworkById.artistInfo?.mobile?.phone
-                  : "not found"}{" "}
-                {artworkById ? artworkById.artistInfo?.email : "not found"}
+                {artworkById ? artworkById.artistInfo?.mobile?.phone : "not found"} {artworkById ? artworkById.artistInfo?.email : "not found"}
               </Text>
             </Row>
 
             <Row className="details-image-constiner">
               <Row className="details-image">
                 <Text className="data-header">Artwork Main Photo</Text>
-                {artworkById?.artworkMainPhoto ? (
-                  <img
-                    className="data-image"
-                    src={artworkById?.artworkMainPhoto}
-                    alt="main"
-                  />
-                ) : (
-                  "not found"
-                )}
+                {artworkById?.artworkMainPhoto ? <img className="data-image" src={artworkById?.artworkMainPhoto} alt="main" /> : "not found"}
               </Row>
 
               {artworkById?.artworkInSitu && (
                 <Row className="details-image">
                   <Text className="data-header">Artwork Photo in situ</Text>
-                  <img
-                    className="data-image"
-                    src={artworkById?.artworkInSitu}
-                    alt="main"
-                  />
+                  <img className="data-image" src={artworkById?.artworkInSitu} alt="main" />
                 </Row>
               )}
             </Row>
 
             <Row className="detail">
               <Text className="data-header">Artwork Title</Text>
-              <Text className="data">
-                {artworkById ? artworkById?.title : "not found"}
-              </Text>
+              <Text className="data">{artworkById ? artworkById?.title : "not found"}</Text>
             </Row>
 
             <Row className="detail">
               <Text className="data-header">Support</Text>
-              <Text className="data">
-                {artworkById ? artworkById?.support : "not found"}
-              </Text>
+              <Text className="data">{artworkById ? artworkById?.support : "not found"}</Text>
+            </Row>
+
+            <Row className="detail">
+              <Text className="data-header">Material</Text>
+              <Text className="data">{artworkById ? artworkById?.material : "not found"}</Text>
             </Row>
 
             <Row className="size-details">
               <Col className="size">
                 <Text className="data-header">Height</Text>
-                <Text className="data">
-                  {artworkById ? artworkById?.height : "not found"}
-                </Text>
+                <Text className="data">{artworkById ? artworkById?.height : "not found"}</Text>
               </Col>
               <Col className="size">
                 <Text className="data-header">Width</Text>
-                <Text className="data">
-                  {artworkById ? artworkById?.width : "not found"}
-                </Text>
+                <Text className="data">{artworkById ? artworkById?.width : "not found"}</Text>
               </Col>
               <Col className="size">
                 <Text className="data-header">Depth</Text>
-                <Text className="data">
-                  {artworkById ? artworkById?.depth : "not found"}
-                </Text>
+                <Text className="data">{artworkById ? artworkById?.depth : "not found"}</Text>
               </Col>
             </Row>
 
             <Row className="detail">
               <Text className="data-header">Artwork Current Location</Text>
-              <Text className="data">
-                {artworkById ? artworkById?.currentLocation : "not found"}
-              </Text>
+              <Text className="data">{artworkById ? artworkById?.currentLocation : "not found"}</Text>
             </Row>
 
             <Row className="detail">
               <Text className="data-header">Year of Creation</Text>
-              <Text className="data">
-                {artworkById ? artworkById?.yearOfCreation : "not found"}
-              </Text>
+              <Text className="data">{artworkById ? artworkById?.yearOfCreation : "not found"}</Text>
             </Row>
 
             <Row className="detail">
-              <Text className="data-header">
-                Other online sales channels this artwork is presented.
-              </Text>
+              <Text className="data-header">Other online sales channels this artwork is presented.</Text>
               <Text className="data">
                 {artworkById
                   ? artworkById?.presentedChannels?.map((item) => {
@@ -263,8 +233,7 @@ const SubmissionDetails = () => {
               wrapperCol={{ span: 16 }}
               onFinish={onFinishNote}
               onFinishFailed={onFinishFailed}
-              className="submit-work-form"
-            >
+              className="submit-work-form">
               <Row className="detail">
                 <Text className="data-header">
                   <span className="dark">Note</span> (for internal use only)
@@ -273,20 +242,14 @@ const SubmissionDetails = () => {
                   <Textarea className="note" type="text" />
                 </FormItem>
                 <Row className="textarea-save-row">
-                  <button
-                    className="textarea-save-button"
-                    type="primary"
-                    htmlType="submit"
-                  >
+                  <button className="textarea-save-button" type="primary" htmlType="submit">
                     Save
                   </button>
                 </Row>
               </Row>
             </Form>
 
-            {artworkById?.priceOffer && (
-              <ArtworkPrice price={artworkById?.priceOffer} />
-            )}
+            {artworkById?.priceOffer && <ArtworkPrice price={artworkById?.priceOffer} />}
 
             <PriceOfferHelper
               history={artworkHistory}
@@ -296,14 +259,9 @@ const SubmissionDetails = () => {
               isAdmin={true}
             />
 
-            {!!artworkById?.submissionStatus &&
-              artworkById?.submissionStatus !== ARTWORK_STATUSES_ENUM.New && (
-                <ArtworkActionButtons
-                  status={artworkById?.submissionStatus}
-                  isAdmin={true}
-                  id={id}
-                />
-              )}
+            {!!artworkById?.submissionStatus && artworkById?.submissionStatus !== ARTWORK_STATUSES_ENUM.New && (
+              <ArtworkActionButtons status={artworkById?.submissionStatus} isAdmin={true} id={id} />
+            )}
           </Col>
         </Row>
       </Row>

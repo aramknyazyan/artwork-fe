@@ -4,10 +4,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getArtworkAction } from "../../redux/action";
 import { getArtworkListSelector } from "../../redux/selector/selector";
-import {
-  backofficeDataMapping,
-  artworkDataMapping,
-} from "../../shared/mapping/backofficeDataMap";
+import { backofficeDataMapping, artworkDataMapping } from "../../shared/mapping/backofficeDataMap";
 
 import { Row, Menu, Input, Typography, Select, Table } from "antd";
 import { statusSelectConstants } from "../../shared/constants/statusSelect.constants";
@@ -86,11 +83,7 @@ const BackOffice = () => {
   return (
     <Row className="backoffice-page">
       <Row className="backoffice-header">
-        <Menu
-          className="backoffice-header-menu"
-          selectedKeys={current}
-          onClick={menuChangeHandler}
-        >
+        <Menu className="backoffice-header-menu" selectedKeys={current} onClick={menuChangeHandler}>
           <MenuItem key="">Backoffice</MenuItem>
           <MenuItem key="Submitted">Submissions</MenuItem>
           <MenuItem key="Archived">Archive</MenuItem>
@@ -102,18 +95,8 @@ const BackOffice = () => {
           <Text className="text">New Submissions</Text>
         </Row>
         <Row className="search-submissions">
-          <Search
-            placeholder="Search"
-            allowClear
-            style={{ width: 200 }}
-            onSearch={onSearch}
-          />
-          <Select
-            style={{ width: 200 }}
-            placeholder="Status"
-            onChange={selectChangeHandler}
-            allowClear
-          >
+          <Search placeholder="Search" allowClear style={{ width: 200 }} onSearch={onSearch} />
+          <Select style={{ width: 200 }} placeholder="Status" onChange={selectChangeHandler} allowClear>
             {statusSelectConstants.map((item) => {
               return (
                 <Option value={item} key={item}>
@@ -137,7 +120,13 @@ const BackOffice = () => {
           }}
           className="tableANTD"
           onRow={(record) => ({
-            onClick: () => {
+            onClick: (event) => {
+              console.log(event.target);
+
+              if (!event.target.classList.contains("ant-table-cell")) {
+                return;
+              }
+
               navigate(`/backoffice/${record.id}`);
             },
           })}

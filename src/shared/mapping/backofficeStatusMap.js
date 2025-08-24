@@ -12,4 +12,5 @@ export const backofficeSatatusMap = {
   Published: "pending",
   Sold: "accepted-price-offer",
   Shipped: "accepted-price-offer",
+  Archived: "archived",
 };

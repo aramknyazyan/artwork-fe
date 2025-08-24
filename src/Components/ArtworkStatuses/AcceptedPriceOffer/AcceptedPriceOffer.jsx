@@ -2,16 +2,10 @@ import React from "react";
 // ANTD components
 import { Row, Select, message } from "antd";
 // constants
-import {
-  ARTWORK_STATUSES_CLASS_NAME,
-  ARTWORK_STATUSES_ENUM,
-} from "../../../shared/constants";
+import { ARTWORK_STATUSES_CLASS_NAME, ARTWORK_STATUSES_ENUM } from "../../../shared/constants";
 // api
 import { useDispatch } from "react-redux";
-import {
-  patchArtworkAction,
-  getArtworkByIdAction,
-} from "../../../redux/action";
+import { patchArtworkAction, getArtworkByIdAction, getArtworkHistoryAction } from "../../../redux/action";
 // styles
 import "./AcceptedPriceOffer.scss";
 
@@ -29,6 +23,7 @@ const AcceptedPriceOffer = ({ status, id, counterOffer }) => {
 
     if (typeof response === "string") {
       await dispatch(getArtworkByIdAction(id));
+      await dispatch(getArtworkHistoryAction(id));
       message.success("Status changed successfully!");
     }
   };
@@ -38,22 +33,10 @@ const AcceptedPriceOffer = ({ status, id, counterOffer }) => {
       <Row className="accepted-status-select-title">Price Offer Status:</Row>
 
       <Row className={ARTWORK_STATUSES_CLASS_NAME[status]}>
-        <Select
-          defaultValue={status || ARTWORK_STATUSES_ENUM.Accepted_Price_Offer}
-          onChange={selectChangeHandler}
-          className="status-select"
-        >
-          {!counterOffer && (
-            <Option value={ARTWORK_STATUSES_ENUM.Accepted_Price_Offer}>
-              Accepted Price Offer
-            </Option>
-          )}
+        <Select defaultValue={status || ARTWORK_STATUSES_ENUM.Accepted_Price_Offer} onChange={selectChangeHandler} className="status-select">
+          {!counterOffer && <Option value={ARTWORK_STATUSES_ENUM.Accepted_Price_Offer}>Accepted Price Offer</Option>}
 
-          {counterOffer && (
-            <Option value={ARTWORK_STATUSES_ENUM.Accepted_Counter_Offer}>
-              Accepted Counter Offer
-            </Option>
-          )}
+          {counterOffer && <Option value={ARTWORK_STATUSES_ENUM.Accepted_Counter_Offer}>Accepted Counter Offer</Option>}
           <Option value={ARTWORK_STATUSES_ENUM.Published}>Published</Option>
           <Option value={ARTWORK_STATUSES_ENUM.Sold}>Sold</Option>
           <Option value={ARTWORK_STATUSES_ENUM.Shipped}>Shipped</Option>

@@ -5,10 +5,7 @@ import { Form, Button, Typography, Input, Row, message } from "antd";
 import CurrencySelect from "../../CurrencySelect/CurrencySelect";
 // api
 import { useDispatch } from "react-redux";
-import {
-  patchArtworkAction,
-  getArtworkByIdAction,
-} from "../../../redux/action";
+import { patchArtworkAction, getArtworkByIdAction, getArtworkHistoryAction } from "../../../redux/action";
 // styles
 import "./PriceOfferCL.scss";
 
@@ -30,6 +27,7 @@ const PriceOfferCL = ({ id }) => {
 
       if (typeof response === "string") {
         await dispatch(getArtworkByIdAction(id));
+        await dispatch(getArtworkHistoryAction(id));
         message.success("Submit success!");
       }
     } catch (error) {
@@ -47,6 +45,7 @@ const PriceOfferCL = ({ id }) => {
 
       if (typeof response === "string") {
         await dispatch(getArtworkByIdAction(id));
+        await dispatch(getArtworkHistoryAction(id));
         message.success("Price Offer Accepted!");
       }
     } catch (error) {
@@ -64,6 +63,7 @@ const PriceOfferCL = ({ id }) => {
 
       if (typeof response === "string") {
         await dispatch(getArtworkByIdAction(id));
+        await dispatch(getArtworkHistoryAction(id));
         message.success("Price Offer Rejected!");
       }
     } catch (error) {
@@ -85,8 +85,7 @@ const PriceOfferCL = ({ id }) => {
         onFinish={onFinishPriceOffer}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        className="submit-counter-Offer"
-      >
+        className="submit-counter-Offer">
         <Row className="counter-Offer-detail">
           <Text className="data-header">
             <span className="dark">Counter Offer</span>
@@ -99,17 +98,12 @@ const PriceOfferCL = ({ id }) => {
                 required: true,
                 message: "Please input counter price offer!",
               },
-            ]}
-          >
+            ]}>
             <Input addonAfter={CurrencySelect} type="number" />
           </FormItem>
 
           <Row className="send-counter-price">
-            <Button
-              className="send-counter-price-button"
-              type="primary"
-              htmlType="submit"
-            >
+            <Button className="send-counter-price-button" type="primary" htmlType="submit">
               Send Counter Offer
             </Button>
           </Row>
@@ -117,19 +111,11 @@ const PriceOfferCL = ({ id }) => {
       </Form>
 
       <Row className="counter-offer-action-buttons">
-        <Button
-          className="reject-price-offer-button"
-          onClick={handleRejectPriceOffer}
-          type="primary"
-        >
+        <Button className="reject-price-offer-button" onClick={handleRejectPriceOffer} type="primary">
           Reject Price Offer
         </Button>
 
-        <Button
-          className="accept-price-offer-button"
-          onClick={handleAcceptPriceOffer}
-          type="primary"
-        >
+        <Button className="accept-price-offer-button" onClick={handleAcceptPriceOffer} type="primary">
           Accept Price Offer
         </Button>
       </Row>

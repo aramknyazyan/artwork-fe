@@ -5,10 +5,7 @@ import { Form, Button, Typography, Input, Row, message } from "antd";
 import CurrencySelect from "../../CurrencySelect/CurrencySelect";
 // api
 import { useDispatch } from "react-redux";
-import {
-  patchArtworkAction,
-  getArtworkByIdAction,
-} from "../../../redux/action";
+import { patchArtworkAction, getArtworkByIdAction, getArtworkHistoryAction } from "../../../redux/action";
 // styles
 import "./PriceOffer.scss";
 
@@ -31,6 +28,7 @@ const PriceOffer = ({ id }) => {
 
       if (typeof response === "string") {
         await dispatch(getArtworkByIdAction(id));
+        await dispatch(getArtworkHistoryAction(id));
         message.success("Submit success!");
       }
     } catch (error) {
@@ -51,8 +49,7 @@ const PriceOffer = ({ id }) => {
       onFinish={onFinishPriceOffer}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      className="submit-work-form"
-    >
+      className="submit-work-form">
       <Row className="detail">
         <Text className="data-header">
           <span className="dark">Price Offer</span>
@@ -64,17 +61,12 @@ const PriceOffer = ({ id }) => {
               required: true,
               message: "Please input price offer!",
             },
-          ]}
-        >
+          ]}>
           <Input addonAfter={CurrencySelect} type="number" />
         </FormItem>
 
         <Row className="send-price">
-          <Button
-            className="send-price-button"
-            type="primary"
-            htmlType="submit"
-          >
+          <Button className="send-price-button" type="primary" htmlType="submit">
             Send Price Offer
           </Button>
         </Row>

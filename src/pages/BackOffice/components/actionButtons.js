@@ -16,10 +16,12 @@ const ActionButtons = ({ id, submissionStatus }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isArchiveModalVisible, setIsArchiveModalVisible] = useState(false);
 
-  const showModal = () => {
+  const showModal = (event) => {
+    event.stopPropagation();
     setIsModalVisible(true);
   };
-  const showArchiveModal = () => {
+  const showArchiveModal = (event) => {
+    event.stopPropagation();
     setIsArchiveModalVisible(true);
   };
 
@@ -54,37 +56,15 @@ const ActionButtons = ({ id, submissionStatus }) => {
       <Link to={`/backoffice/${id}`}>
         <VscEye id={id} color="#5E3CEF" size={24} className="actions-icon" />
       </Link>
-      <AiOutlineDelete
-        color="#5E3CEF"
-        size={24}
-        className="actions-icon"
-        onClick={showArchiveModal}
-      />
-      <RiDeleteBin6Line
-        color="#FF4D4F"
-        size={24}
-        className="actions-icon"
-        onClick={showModal}
-      />
-      <Modal
-        title="delete_modal"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
+      <AiOutlineDelete color="#5E3CEF" size={24} className="actions-icon" onClick={showArchiveModal} />
+      <RiDeleteBin6Line color="#FF4D4F" size={24} className="actions-icon" onClick={showModal} />
+
+      <Modal title="delete_modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Col className="modal-header">
-          <RiDeleteBin6Line
-            color="#FF4D4F"
-            size={30}
-            className="actions-icon"
-          />
+          <RiDeleteBin6Line color="#FF4D4F" size={30} className="actions-icon" />
           <Col className="modal-text">
-            <Text className="modal-header-content">
-              Are you sure you want to delete this submission?
-            </Text>
-            <Text className="modal-header-subcontent">
-              By deleting this submission, you will loose the content within.
-            </Text>
+            <Text className="modal-header-content">Are you sure you want to delete this submission?</Text>
+            <Text className="modal-header-subcontent">By deleting this submission, you will loose the content within.</Text>
             <Col className="modal-buttons">
               <Button className="modal-button cancel" onClick={handleCancel}>
                 No
@@ -97,29 +77,16 @@ const ActionButtons = ({ id, submissionStatus }) => {
         </Col>
       </Modal>
 
-      <Modal
-        title="archive_modal"
-        visible={isArchiveModalVisible}
-        onOk={handleArchiveOk}
-        onCancel={handleArchiveCancel}
-      >
+      <Modal title="archive_modal" visible={isArchiveModalVisible} onOk={handleArchiveOk} onCancel={handleArchiveCancel}>
         <Col className="modal-header">
           <AiOutlineDelete color="#5E3CEF" size={30} className="actions-icon" />
           <Col className="modal-text">
-            <Text className="modal-header-content">
-              Are you sure you want to archive this submission?
-            </Text>
+            <Text className="modal-header-content">Are you sure you want to archive this submission?</Text>
             <Col className="modal-buttons">
-              <Button
-                className="modal-button cancel"
-                onClick={handleArchiveCancel}
-              >
+              <Button className="modal-button cancel" onClick={handleArchiveCancel}>
                 No
               </Button>
-              <Button
-                className="modal-button archive"
-                onClick={handleArchiveOk}
-              >
+              <Button className="modal-button archive" onClick={handleArchiveOk}>
                 Confirm
               </Button>
             </Col>
